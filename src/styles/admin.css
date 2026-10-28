@@ -1,0 +1,380 @@
+/* ==========================================================================
+   SWEAT CMS Studio — Luxury White & Crimson Red Design System
+   Strict Theme: 100% White (#FFFFFF, #FAFAFA), Crimson Red (#E10600)
+   Zero Black, Zero Dark Backgrounds, High-Contrast Typography
+   Senior UI/UX Architect Standard with Smooth Micro-Animations
+   ========================================================================== */
+
+:root {
+  --admin-bg: #FAFAFA;
+  --admin-surface: #FFFFFF;
+  --admin-surface-subtle: #F8FAFC;
+  --admin-surface-muted: #F1F5F9;
+  --admin-border: #E2E8F0;
+  --admin-border-subtle: #EDF2F7;
+  --admin-text-primary: #0F172A;
+  --admin-text-secondary: #334155;
+  --admin-text-muted: #64748B;
+  --admin-text-light: #94A3B8;
+  --admin-red-primary: #E10600;
+  --admin-red-hover: #FF1A0E;
+  --admin-red-soft: rgba(225, 6, 0, 0.08);
+  --admin-red-border: rgba(225, 6, 0, 0.25);
+  --admin-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --admin-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --admin-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Base Wrapper & Container */
+.cms-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--admin-bg) !important;
+  color: var(--admin-text-primary) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  position: relative;
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animations */
+@keyframes cmsFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cmsPulseRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(225, 6, 0, 0); }
+}
+
+.cms-animate-fade {
+  animation: cmsFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sidebar Dock */
+.cms-sidebar {
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: var(--admin-surface) !important;
+  border-right: 1px solid var(--admin-border) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  z-index: 50;
+  flex-shrink: 0;
+  box-shadow: 1px 0 6px rgba(0, 0, 0, 0.02);
+}
+
+/* Main Workspace */
+.cms-main {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh;
+  background: var(--admin-bg) !important;
+  color: var(--admin-text-primary) !important;
+  overflow-x: hidden;
+}
+
+/* Global Strict Overrides inside CMS */
+.cms-main h1,
+.cms-main h2,
+.cms-main h3,
+.cms-main h4,
+.cms-main h5,
+.cms-main h6,
+.cms-main .disp {
+  color: var(--admin-text-primary) !important;
+  font-family: 'Bebas Neue', 'Manrope', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.cms-main .num {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--admin-text-primary) !important;
+}
+
+.cms-main p,
+.cms-main span,
+.cms-main div,
+.cms-main label,
+.cms-main td {
+  color: var(--admin-text-secondary);
+}
+
+/* Cards & Form Tiles */
+.cms-main .tile,
+.cms-main .cms-card {
+  background: var(--admin-surface) !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--admin-shadow-sm) !important;
+  color: var(--admin-text-primary) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.cms-main .tile:hover,
+.cms-main .cms-card:hover {
+  border-color: #CBD5E1 !important;
+  box-shadow: var(--admin-shadow-md) !important;
+}
+
+/* ALL Input Fields & Textareas — 100% White & Red */
+.cms-main .field label {
+  color: #475569 !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 6px;
+}
+
+.cms-main .field input,
+.cms-main .field select,
+.cms-main .field textarea,
+.cms-main input[type="text"],
+.cms-main input[type="password"],
+.cms-main input[type="email"],
+.cms-main textarea,
+.cms-main select {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  border-radius: 8px !important;
+  font-family: 'Manrope', sans-serif !important;
+  font-size: 14px !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease !important;
+}
+
+.cms-main .field input::placeholder,
+.cms-main .field textarea::placeholder,
+.cms-main input::placeholder,
+.cms-main textarea::placeholder {
+  color: #94A3B8 !important;
+  font-weight: 400 !important;
+}
+
+.cms-main .field input:focus,
+.cms-main .field select:focus,
+.cms-main .field textarea:focus,
+.cms-main input:focus,
+.cms-main textarea:focus,
+.cms-main select:focus {
+  outline: none !important;
+  background: #FFFFFF !important;
+  border-color: var(--admin-red-primary) !important;
+  box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.14) !important;
+  color: #0F172A !important;
+}
+
+/* Navigation Items */
+.cms-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  color: #475569 !important;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.cms-nav-item:hover {
+  color: #0F172A !important;
+  background: #F1F5F9 !important;
+}
+
+.cms-nav-item.active {
+  color: var(--admin-red-primary) !important;
+  background: var(--admin-red-soft) !important;
+  border-left-color: var(--admin-red-primary) !important;
+  font-weight: 700;
+}
+
+/* Buttons — Primary Crimson Red & Secondary Ghost */
+.cms-main .btn-red,
+.btn-red {
+  background: var(--admin-red-primary) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(225, 6, 0, 0.28) !important;
+  font-weight: 700 !important;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.cms-main .btn-red:hover,
+.btn-red:hover {
+  background: var(--admin-red-hover) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(225, 6, 0, 0.38) !important;
+}
+
+.cms-main .btn-ghost,
+.btn-ghost {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #1E293B !important;
+  font-weight: 700 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cms-main .btn-ghost:hover,
+.btn-ghost:hover {
+  border-color: var(--admin-red-primary) !important;
+  color: var(--admin-red-primary) !important;
+  background: rgba(225, 6, 0, 0.05) !important;
+}
+
+/* Pills & Chips */
+.cms-main .pill {
+  background: #FEE2E2 !important;
+  color: #DC2626 !important;
+  border: 1px solid #FECACA !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  border-radius: 999px !important;
+}
+
+.cms-main .chip {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+  transition: all 0.15s ease !important;
+}
+
+.cms-main .chip:hover {
+  border-color: var(--admin-red-primary) !important;
+  color: var(--admin-red-primary) !important;
+  background: #FEF2F2 !important;
+}
+
+.cms-main .chip.active {
+  background: var(--admin-red-primary) !important;
+  border-color: var(--admin-red-primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(225, 6, 0, 0.25) !important;
+}
+
+/* Data Tables */
+.cms-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  background: #FFFFFF !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cms-table th {
+  padding: 14px 18px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #475569 !important;
+  border-bottom: 2px solid #E2E8F0;
+  background: #F8FAFC !important;
+  font-weight: 800;
+}
+
+.cms-table td {
+  padding: 16px 18px;
+  font-size: 14px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B !important;
+  transition: background 0.1s ease;
+}
+
+.cms-table tr:hover td {
+  background: #F8FAFC !important;
+}
+
+/* Shot Camera Placeholder in Light Admin */
+.cms-main .shot {
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  border: 1.5px solid #E2E8F0 !important;
+  background-image: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0 2px, transparent 2px 14px) !important;
+  border-radius: 8px !important;
+}
+
+.cms-main .shot b {
+  color: #0F172A !important;
+}
+
+.cms-main .shot::before,
+.cms-main .shot::after {
+  border-color: var(--admin-red-primary) !important;
+}
+
+/* ==========================================================================
+   ALL SYMBOLS & ICONS: STRICT PITCH BLACK (#000000)
+   Ensures eye, +, edit, upload, save, search and all UI symbols are crisp black
+   ========================================================================== */
+
+.cms-wrapper svg,
+.cms-main svg,
+.cms-sidebar svg,
+.cms-topbar svg,
+.cms-wrapper button svg,
+.cms-wrapper .btn svg,
+.cms-wrapper .btn-red svg,
+.cms-wrapper .btn-ghost svg,
+.cms-wrapper a svg,
+.cms-wrapper label svg,
+.cms-wrapper span svg,
+.cms-wrapper div > svg,
+.cms-wrapper i svg {
+  stroke: #000000 !important;
+  color: #000000 !important;
+}
+
+.cms-wrapper svg path,
+.cms-wrapper svg circle,
+.cms-wrapper svg line,
+.cms-wrapper svg rect,
+.cms-wrapper svg polyline,
+.cms-wrapper svg polygon {
+  stroke: #000000 !important;
+}
+
+/* Specific allowed semantic exceptions */
+.cms-wrapper a[href*="wa.me"] svg,
+.cms-wrapper a[href*="wa.me"] svg path {
+  stroke: #16A34A !important;
+  color: #16A34A !important;
+}
+
+.cms-wrapper button[style*="DC2626"] svg,
+.cms-wrapper button[style*="DC2626"] svg path,
+.cms-wrapper button[style*="EF4444"] svg,
+.cms-wrapper button[style*="EF4444"] svg path {
+  stroke: #DC2626 !important;
+  color: #DC2626 !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cms-wrapper {
+    flex-direction: column !important;
+  }
+  .cms-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+  }
+}
