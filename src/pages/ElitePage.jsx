@@ -24,7 +24,7 @@ export const ElitePage = () => {
   return (
     <div className="sw">
       {/* DYNAMIC HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -52,7 +52,7 @@ export const ElitePage = () => {
             <span className="pill" style={{ background: '#E10600' }}>All-Inclusive VIP</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '230px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "SWEAT ELITE."}
           </AnimatedHeadline>
 
@@ -69,7 +69,7 @@ export const ElitePage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div><div className="num" style={{ fontSize: '60px' }}>All</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Access Unrestricted</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>VIP</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Priority Slot Reservation</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>Head</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Dedicated Coach Oversight</div></div>
@@ -85,7 +85,7 @@ export const ElitePage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">The Privileges</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               EVERY DETAIL.<br /><span className="red">ZERO FRICTION.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>
@@ -118,7 +118,7 @@ export const ElitePage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">Transformations</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '120px' }}>
+            <AnimatedHeadline className="disp h2">
               ELITE<br /><span className="out">RESULTS.</span>
             </AnimatedHeadline>
           </div>

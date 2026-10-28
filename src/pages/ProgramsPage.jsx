@@ -19,13 +19,13 @@ export const ProgramsPage = () => {
   return (
     <div className="sw">
       {/* HERO */}
-      <section style={{ padding: '120px 0 80px', minHeight: '520px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)' }}>
+      <section className="hero-section" style={{ padding: '120px 0 80px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)' }}>
         <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <span className="eyebrow red">The Curriculum</span>
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '200px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             SEVEN WAYS IN.<br /><span className="out">ONE OUTCOME.</span>
           </AnimatedHeadline>
-          <p style={{ margin: 0, fontSize: '22px', lineHeight: 1.55, color: '#C4C4C4', maxWidth: '680px' }}>
+          <p style={{ margin: 0, fontSize: '21px', lineHeight: 1.55, color: '#C4C4C4', maxWidth: '680px' }}>
             Every body is placed into the exact room and class level matched to their movement screening and goals. Explore our full training ecosystem below.
           </p>
         </div>
@@ -45,7 +45,7 @@ export const ProgramsPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left', marginBottom: '64px' }}>
             <span className="eyebrow red">Full Catalog</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               ALL PROGRAMS.
             </AnimatedHeadline>
           </div>
@@ -87,7 +87,7 @@ export const ProgramsPage = () => {
         <div className="wrap" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '32px' }}>
           <div>
             <span className="eyebrow red">Start Today</span>
-            <h2 className="disp" style={{ fontSize: '72px', margin: '8px 0 0' }}>READY TO BE PLACED?</h2>
+            <h2 className="disp h2" style={{ margin: '8px 0 0' }}>READY TO BE PLACED?</h2>
           </div>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
             <Link to="/book" className="btn btn-red" style={{ minHeight: '60px', padding: '0 32px' }}>Experience SWEAT</Link>

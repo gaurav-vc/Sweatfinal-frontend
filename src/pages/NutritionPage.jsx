@@ -22,7 +22,7 @@ export const NutritionPage = () => {
   return (
     <div className="sw">
       {/* DYNAMIC HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -50,7 +50,7 @@ export const NutritionPage = () => {
             <span className="pill" style={{ background: '#E10600' }}>Fuel Your Transformation</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '230px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "NUTRITION."}
           </AnimatedHeadline>
 
@@ -67,7 +67,7 @@ export const NutritionPage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div><div className="num" style={{ fontSize: '60px' }}>1:1</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Sports Nutritionist</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>0</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Starvation or Crash Diets</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>7</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Days Weekly App Review</div></div>
@@ -83,7 +83,7 @@ export const NutritionPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">The Methodology</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               SCIENCE-BACKED.<br /><span className="red">SUSTAINABLE FUEL.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>

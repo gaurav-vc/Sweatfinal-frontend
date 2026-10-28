@@ -58,12 +58,8 @@ export const SlotBookingWidget = ({
 
   return (
     <div
+      className="slot-booking-card"
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '22px',
-        padding: '40px',
-        borderRadius: '6px',
         background: isRed ? '#E10600' : '#111111',
         border: isRed ? 'none' : '1px solid rgba(255, 255, 255, 0.16)',
         color: '#FFFFFF',
@@ -72,7 +68,7 @@ export const SlotBookingWidget = ({
       <span className="eyebrow" style={{ color: isRed ? '#FFE5E3' : '#FF3B30' }}>
         {eyebrow}
       </span>
-      <h3 className="disp" style={{ fontSize: '84px', lineHeight: 0.9 }}>
+      <h3 className="disp" style={{ fontSize: 'clamp(34px, 8vw, 80px)', lineHeight: 0.95 }}>
         {title}
       </h3>
       <p style={{ margin: 0, fontSize: '17px', lineHeight: 1.55, color: '#F2F2F2' }}>

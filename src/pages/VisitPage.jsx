@@ -62,12 +62,11 @@ export default function VisitPage() {
   return (
     <div className="sw">
       {/* HERO SECTION */}
-      <section style={{
+      <section className="hero-section" style={{
         position: 'relative',
         overflow: 'hidden',
         padding: '120px 0 88px',
         borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-        minHeight: '820px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end'
@@ -114,7 +113,6 @@ export default function VisitPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="disp h1"
-            style={{ fontSize: 'clamp(80px, 16vw, 230px)', lineHeight: 0.84 }}
           >
             {data.hero?.headline || 'COME IN.'}
           </motion.h1>
@@ -144,7 +142,7 @@ export default function VisitPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
                 <span className="eyebrow red">SWEAT HQ · Andheri</span>
-                <h2 className="disp h2" style={{ fontSize: 'clamp(56px, 10vw, 112px)' }}>
+                <h2 className="disp h2">
                   FIND US.
                 </h2>
               </div>
@@ -190,7 +188,7 @@ export default function VisitPage() {
               </div>
             </div>
 
-            <div className="shot" style={{ height: '640px' }}>
+            <div className="shot map-shot-container">
               <iframe
                 title="SWEAT HQ Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.5884976766487!2d72.82765637599026!3d19.12570894982637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b620b784e1b5%3A0x600b52668e1a17fa!2sAndheri%20West%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -210,7 +208,7 @@ export default function VisitPage() {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">Inside</span>
-            <h2 className="disp h2" style={{ fontSize: 'clamp(56px, 10vw, 112px)' }}>
+            <h2 className="disp h2">
               FOUR SPACES.<br />ONE ADDRESS.
             </h2>
           </div>

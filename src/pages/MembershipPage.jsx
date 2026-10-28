@@ -22,12 +22,12 @@ export const MembershipPage = () => {
     <div className="sw">
       
       {/* HERO & DUAL BOOKING CARDS */}
-      <section style={{ padding: '104px 0 96px', minHeight: '1200px' }}>
+      <section className="hero-section" style={{ padding: '104px 0 96px' }}>
         <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <span className="eyebrow red">Membership</span>
-            <AnimatedHeadline className="disp h1" style={{ fontSize: '220px', lineHeight: 0.84 }}>
+            <AnimatedHeadline className="disp h1">
               TWO WAYS<br /><span className="out">IN.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '21px', lineHeight: 1.55, color: '#C4C4C4', maxWidth: '660px' }}>
@@ -72,7 +72,7 @@ export const MembershipPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">What happens next</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '120px' }}>
+            <AnimatedHeadline className="disp h2">
               FOUR STEPS.<br />NO SURPRISES.
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>
@@ -103,7 +103,7 @@ export const MembershipPage = () => {
           <div className="wrap">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left', marginBottom: '56px' }}>
               <span className="eyebrow red">Investment</span>
-              <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+              <AnimatedHeadline className="disp h2">
                 MEMBERSHIP TIERS.
               </AnimatedHeadline>
             </div>
@@ -152,7 +152,7 @@ export const MembershipPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">Transformations</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '120px' }}>
+            <AnimatedHeadline className="disp h2">
               REAL PEOPLE.<br />REAL <span className="out">CHANGE.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#A3A3A3', maxWidth: '640px' }}>

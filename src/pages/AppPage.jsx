@@ -115,15 +115,14 @@ export default function AppPage() {
   return (
     <div className="sw">
       {/* HERO SECTION */}
-      <section style={{
+      <section className="hero-section" style={{
         padding: '104px 0 88px',
         borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-        minHeight: '900px'
       }}>
         <div className="wrap split">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
             <span className="eyebrow red">{data.hero?.eyebrow || 'The SWEAT app'}</span>
-            <h1 className="disp h1" style={{ fontSize: 'clamp(80px, 15vw, 210px)', lineHeight: 0.84 }}>
+            <h1 className="disp h1">
               BOOK.<br />
               TRAIN.<br />
               <span className="out">TRACK.</span>
@@ -142,9 +141,9 @@ export default function AppPage() {
           </div>
 
           {/* TWO PHONE PREVIEWS */}
-          <div style={{ display: 'flex', gap: '18px', justifyContent: 'center', alignItems: 'flex-start' }}>
+          <div className="phones-preview-grid">
             {/* Phone 1: Progress */}
-            <div style={{ marginTop: '72px' }}>
+            <div style={{ marginTop: '36px' }}>
               <div className="phone">
                 <div className="scr">
                   <span className="eyebrow red">Progress</span>
@@ -212,18 +211,12 @@ export default function AppPage() {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">What's inside</span>
-            <h2 className="disp h2" style={{ fontSize: 'clamp(56px, 10vw, 112px)' }}>
+            <h2 className="disp h2">
               FIVE THINGS.<br />ONE APP.
             </h2>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0, 5fr) minmax(0, 7fr)',
-            gap: '72px',
-            marginTop: '64px',
-            alignItems: 'start'
-          }}>
+          <div className="tab-interactive-grid" style={{ alignItems: 'start' }}>
             {/* Feature Tabs */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {appFeatures.map(f => (

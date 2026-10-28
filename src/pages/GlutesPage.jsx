@@ -23,7 +23,7 @@ export const GlutesPage = () => {
   return (
     <div className="sw">
       {/* HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -56,7 +56,7 @@ export const GlutesPage = () => {
             <span className="pill" style={{ background: '#E10600' }}>Shape & Power</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '230px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "GLUTES & ABS."}
           </AnimatedHeadline>
 
@@ -76,7 +76,7 @@ export const GlutesPage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div>
               <div className="num" style={{ fontSize: '60px' }}>50</div>
               <div className="eyebrow" style={{ color: '#D4D4D4' }}>Minutes high tension</div>

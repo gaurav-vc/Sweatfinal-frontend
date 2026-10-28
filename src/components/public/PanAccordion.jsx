@@ -91,10 +91,10 @@ export const PanAccordion = ({ programs = [] }) => {
               </h3>
               
               <div className="more">
-                <p style={{ margin: '0 0 10px', fontSize: '19px', lineHeight: 1.35, fontWeight: 700, color: '#FFFFFF', minWidth: '280px' }}>
+                <p style={{ margin: '0 0 10px', fontSize: '19px', lineHeight: 1.35, fontWeight: 700, color: '#FFFFFF', maxWidth: '460px' }}>
                   {prog.tagline}
                 </p>
-                <p style={{ margin: '0 0 16px', fontSize: '14px', lineHeight: 1.5, color: '#D4D4D4', minWidth: '280px' }}>
+                <p style={{ margin: '0 0 16px', fontSize: '14px', lineHeight: 1.5, color: '#D4D4D4', maxWidth: '460px' }}>
                   {prog.description}
                 </p>
                 <span className="btn btn-red" style={{ minHeight: '46px', fontSize: '12px' }}>

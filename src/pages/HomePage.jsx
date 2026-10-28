@@ -83,7 +83,7 @@ export const HomePage = () => {
           </div>
 
           {/* Master Headline */}
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '240px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             WHERE THE<br />
             STARS TRAIN.<br />
             <span className="out">NOW IT'S YOU.</span>
@@ -122,7 +122,7 @@ export const HomePage = () => {
 
       {/* 2. STATS BAR */}
       <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.12)' }}>
-        <div className="wrap grid4" style={{ paddingTop: '36px', paddingBottom: '36px' }}>
+        <div className="wrap hero-stats-grid" style={{ paddingTop: '36px', paddingBottom: '36px' }}>
           <div>
             <div className="num" style={{ fontSize: '72px' }}>5</div>
             <div className="eyebrow mut">Of Bollywood's names coached by the SWEAT team</div>
@@ -152,7 +152,7 @@ export const HomePage = () => {
         <div className="wrap">
           <div className="split" style={{ alignItems: 'start' }}>
             
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '150px' }}>
+            <AnimatedHeadline className="disp h2">
               THIS IS NOT<br />
               A GYM.<br />
               <span className="out-dk">IT'S WHERE<br />YOU BECOME.</span>
@@ -199,7 +199,7 @@ export const HomePage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">Seven ways in</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               PICK THE<br />OUTCOME.
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#A3A3A3', maxWidth: '640px' }}>

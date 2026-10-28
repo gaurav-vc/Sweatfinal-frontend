@@ -57,14 +57,14 @@ export const BookPage = () => {
 
   return (
     <div className="sw">
-      <section style={{ padding: '104px 0 112px', minHeight: '1200px' }}>
+      <section className="hero-section" style={{ padding: '104px 0 112px' }}>
         <div className="wrap split" style={{ alignItems: 'start' }}>
           
           {/* LEFT COLUMN: GUIDELINES & STEPS */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             <span className="eyebrow red">Book your slot</span>
             
-            <AnimatedHeadline className="disp h1" style={{ fontSize: '200px', lineHeight: 0.84 }}>
+            <AnimatedHeadline className="disp h1">
               SEE IT.<br />
               <span className="out">FEEL IT.</span><br />
               DECIDE.

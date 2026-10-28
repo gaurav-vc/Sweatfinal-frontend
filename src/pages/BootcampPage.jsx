@@ -76,7 +76,7 @@ export const BootcampPage = () => {
     <div className="sw">
       
       {/* HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -109,7 +109,7 @@ export const BootcampPage = () => {
             <span className="pill" style={{ background: '#E10600' }}>Two ways in</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '250px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "BOOTCAMP."}
           </AnimatedHeadline>
 
@@ -129,7 +129,7 @@ export const BootcampPage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div>
               <div className="num" style={{ fontSize: '60px' }}>4</div>
               <div className="eyebrow" style={{ color: '#D4D4D4' }}>Classes, one for every goal</div>
@@ -195,7 +195,7 @@ export const BootcampPage = () => {
           </div>
 
           <div style={{ marginTop: '56px', borderBottom: '1px solid rgba(0, 0, 0, 0.16)' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 5fr) 70px minmax(0, 6fr)', gap: '24px', paddingBottom: '14px' }}>
+            <div className="walk-in-out-header">
               <span className="eyebrow" style={{ color: '#6A6A6A' }}>What you walk in with</span>
               <span></span>
               <span className="eyebrow red">What you walk out with</span>
@@ -209,10 +209,10 @@ export const BootcampPage = () => {
               { in: "You train alone and quit when it gets hard.", out: "A room of people with goals, and two to three coaches who notice when you slip." },
               { in: "You feel like a beginner in every gym.", out: "A place you belong, coached by the man who trained Bollywood's best." },
             ].map((row, idx) => (
-              <div key={idx} style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 5fr) 70px minmax(0, 6fr)', gap: '24px', alignItems: 'center', padding: '30px 0', borderTop: '1px solid rgba(0, 0, 0, 0.16)' }}>
-                <div style={{ fontSize: '22px', lineHeight: 1.35, color: '#6A6A6A', fontWeight: 600 }}>{row.in}</div>
-                <div className="disp red" style={{ fontSize: '52px', textAlign: 'center' }}>→</div>
-                <div style={{ fontSize: '26px', lineHeight: 1.3, fontWeight: 800 }}>{row.out}</div>
+              <div key={idx} className="walk-in-out-row">
+                <div className="in-text">{row.in}</div>
+                <div className="arrow disp red">→</div>
+                <div className="out-text">{row.out}</div>
               </div>
             ))}
           </div>
@@ -220,11 +220,11 @@ export const BootcampPage = () => {
       </section>
 
       {/* FOUR CLASSES INTERACTIVE SELECTOR */}
-      <section id="levels" style={{ padding: '112px 0', minHeight: '1180px', background: '#0A0A0A' }}>
+      <section id="levels" style={{ padding: '112px 0', minHeight: '900px', background: '#0A0A0A' }}>
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">The right room</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               FOUR CLASSES.<br />ONE IS YOURS.
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#A3A3A3', maxWidth: '640px' }}>
@@ -232,7 +232,7 @@ export const BootcampPage = () => {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 4fr) minmax(0, 8fr)', gap: '48px', marginTop: '64px', alignItems: 'start' }}>
+          <div className="tab-interactive-grid">
             {/* Tab Buttons */}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               {classes.map((cls, idx) => (
@@ -255,17 +255,17 @@ export const BootcampPage = () => {
                   }}
                 >
                   <span className="num red" style={{ fontSize: '30px' }}>{cls.num}</span>
-                  <span className="disp" style={{ fontSize: '60px' }}>{cls.name}</span>
+                  <span className="disp" style={{ fontSize: 'clamp(32px, 5vw, 60px)' }}>{cls.name}</span>
                 </button>
               ))}
             </div>
 
             {/* Tab Details Box */}
-            <div className="tile" style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '28px', background: '#111111' }}>
+            <div className="tile" style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '28px', background: '#111111' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
                 <div>
                   <span className="eyebrow red">{currentClass.forLabel}</span>
-                  <h3 className="disp" style={{ fontSize: '92px', marginTop: '10px' }}>{currentClass.name}</h3>
+                  <h3 className="disp" style={{ fontSize: 'clamp(38px, 7vw, 84px)', marginTop: '10px' }}>{currentClass.name}</h3>
                 </div>
                 <div style={{ display: 'flex', gap: '28px' }}>
                   <div>

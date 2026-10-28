@@ -24,7 +24,7 @@ export const CoachingPage = () => {
   return (
     <div className="sw">
       {/* DYNAMIC HERO SECTION */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -52,7 +52,7 @@ export const CoachingPage = () => {
             <span className="pill" style={{ background: '#E10600' }}>Bespoke Standard</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '230px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "ONE-ON-ONE."}
           </AnimatedHeadline>
 
@@ -69,7 +69,7 @@ export const CoachingPage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div>
               <div className="num" style={{ fontSize: '60px' }}>1:1</div>
               <div className="eyebrow" style={{ color: '#D4D4D4' }}>Dedicated Floor Ratio</div>
@@ -97,7 +97,7 @@ export const CoachingPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">The Standard</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               BUILT AROUND<br /><span className="red">ONE PERSON.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>
@@ -130,7 +130,7 @@ export const CoachingPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">Transformations</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '120px' }}>
+            <AnimatedHeadline className="disp h2">
               1-ON-1<br /><span className="out">RESULTS.</span>
             </AnimatedHeadline>
           </div>

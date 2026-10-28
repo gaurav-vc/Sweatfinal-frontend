@@ -22,7 +22,7 @@ export const OnlinePage = () => {
   return (
     <div className="sw">
       {/* DYNAMIC HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 72px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '940px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -50,7 +50,7 @@ export const OnlinePage = () => {
             <span className="pill" style={{ background: '#E10600' }}>Global Remote System</span>
           </div>
 
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '230px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "ONLINE."}
           </AnimatedHeadline>
 
@@ -67,7 +67,7 @@ export const OnlinePage = () => {
             </a>
           </div>
 
-          <div className="grid4" style={{ marginTop: '28px', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '28px' }}>
+          <div className="hero-stats-grid">
             <div><div className="num" style={{ fontSize: '60px' }}>Global</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Access Anywhere</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>100%</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Custom Periodization</div></div>
             <div><div className="num" style={{ fontSize: '60px' }}>48h</div><div className="eyebrow" style={{ color: '#D4D4D4' }}>Video Form Feedback</div></div>
@@ -83,7 +83,7 @@ export const OnlinePage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">How It Operates</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               NO DISTANCE.<br /><span className="red">NO EXCUSES.</span>
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>

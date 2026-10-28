@@ -41,12 +41,11 @@ export default function ShopPage() {
   return (
     <div className="sw">
       {/* HERO SECTION */}
-      <section style={{
+      <section className="hero-section" style={{
         position: 'relative',
         overflow: 'hidden',
         padding: '120px 0 88px',
         borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-        minHeight: '820px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end'
@@ -93,7 +92,6 @@ export default function ShopPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="disp h1"
-            style={{ fontSize: 'clamp(80px, 15vw, 190px)', lineHeight: 0.84 }}
           >
             {data.hero?.headline ? (
               <span dangerouslySetInnerHTML={{ __html: data.hero.headline.replace('\n', '<br/>') }} />

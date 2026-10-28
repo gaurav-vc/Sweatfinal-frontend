@@ -23,7 +23,7 @@ export const TeamPage = () => {
   return (
     <div className="sw">
       {/* DYNAMIC HERO */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 88px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', minHeight: '820px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <section className="hero-section" style={{ position: 'relative', overflow: 'hidden', padding: '120px 0 88px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -47,7 +47,7 @@ export const TeamPage = () => {
 
         <div className="wrap" style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <span className="eyebrow red">{hero.eyebrow || "The Coaches & Founders"}</span>
-          <AnimatedHeadline className="disp h1" style={{ fontSize: '200px', lineHeight: 0.84 }}>
+          <AnimatedHeadline className="disp h1">
             {hero.headline || "THE TEAM."}
           </AnimatedHeadline>
           <p style={{ margin: 0, fontSize: '21px', lineHeight: 1.55, color: '#E5E5E5', maxWidth: '620px' }}>
@@ -61,7 +61,7 @@ export const TeamPage = () => {
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
             <span className="eyebrow red">The Coaches</span>
-            <AnimatedHeadline className="disp h2" style={{ fontSize: '112px' }}>
+            <AnimatedHeadline className="disp h2">
               THE PEOPLE<br />ON THE FLOOR.
             </AnimatedHeadline>
             <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#4A4A4A', maxWidth: '640px' }}>
@@ -119,7 +119,7 @@ export const TeamPage = () => {
       <section style={{ padding: '100px 0', background: '#0A0A0A', textAlign: 'center' }}>
         <div className="wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
           <span className="eyebrow red">Entry strictly by assessment</span>
-          <AnimatedHeadline className="disp h2" style={{ fontSize: '96px', maxWidth: '800px' }}>
+          <AnimatedHeadline className="disp h2" style={{ maxWidth: '800px' }}>
             TRAIN WITH THE BEST IN ANDHERI.
           </AnimatedHeadline>
           <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
