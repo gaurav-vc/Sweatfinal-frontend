@@ -477,3 +477,4 @@ export const PixelMonitor = () => {
 };
 
 export default PixelMonitor;
+

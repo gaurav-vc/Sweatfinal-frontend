@@ -175,3 +175,4 @@ export function trackPageView(pagePath) {
     referrer: typeof document !== 'undefined' ? document.referrer : '',
   });
 }
+
