@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import {
   getPixelConfig,
   updatePixelConfig,
@@ -10,6 +12,14 @@ import {
 import { Activity, Settings, CheckCircle2, AlertTriangle, ChevronDown, ChevronUp, X, Play, Trash2, Eye } from 'lucide-react';
 
 export const PixelMonitor = () => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  // Admin visibility guard: Visible ONLY if admin is authenticated or ?pixel_debug=true
+  const isTokenPresent = typeof window !== 'undefined' && Boolean(localStorage.getItem('sweat_admin_token'));
+  const hasDebugParam = typeof window !== 'undefined' && new URLSearchParams(location.search).get('pixel_debug') === 'true';
+  const isAdmin = isAuthenticated || isTokenPresent || hasDebugParam;
+
   const [config, setConfig] = useState(getPixelConfig);
   const [events, setEvents] = useState(getEventHistory);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +28,7 @@ export const PixelMonitor = () => {
   const [lastFiredId, setLastFiredId] = useState(null);
 
   useEffect(() => {
+    if (!isAdmin) return;
     const unsubscribe = subscribeToPixelEvents((data) => {
       if (data.type === 'EVENT_FIRED') {
         setEvents([...data.history]);
@@ -73,6 +84,10 @@ export const PixelMonitor = () => {
         return '#E10600'; // SWEAT Red
     }
   };
+
+  if (!isAdmin) {
+    return null;
+  }
 
   return (
     <aside
