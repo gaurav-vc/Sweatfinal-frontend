@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LogIn, ChevronDown, Dumbbell, Sparkles, Flame, User, HeartPulse, Apple, Globe, Crown, Layers, Calendar, MapPin, ShoppingBag, Smartphone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SweatLogo from './SweatLogo';
+import { trackEvent } from '../../services/pixelService';
 
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -284,10 +285,20 @@ export const Navbar = () => {
 
         {/* Desktop CTA Action Buttons + Admin Studio Login Symbol */}
         <div className="hide-sm" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Link to="/assessment" className="btn btn-ghost" style={{ minHeight: '46px', padding: '0 18px', fontSize: '12px' }}>
+          <Link
+            to="/assessment"
+            onClick={() => trackEvent('Schedule', { location: 'navbar_desktop', button: 'Assessment' })}
+            className="btn btn-ghost"
+            style={{ minHeight: '46px', padding: '0 18px', fontSize: '12px' }}
+          >
             Assessment
           </Link>
-          <Link to="/book" className="btn btn-red" style={{ minHeight: '46px', padding: '0 20px', fontSize: '12px' }}>
+          <Link
+            to="/book"
+            onClick={() => trackEvent('InitiateCheckout', { location: 'navbar_desktop', button: 'Experience SWEAT' })}
+            className="btn btn-red"
+            style={{ minHeight: '46px', padding: '0 20px', fontSize: '12px' }}
+          >
             Experience SWEAT
           </Link>
 
@@ -444,7 +455,10 @@ export const Navbar = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '8px', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '16px' }}>
               <Link
                 to="/assessment"
-                onClick={() => setMobileOpen(false)}
+                onClick={() => {
+                  trackEvent('Schedule', { location: 'navbar_mobile', button: 'Fitness Assessment' });
+                  setMobileOpen(false);
+                }}
                 className="btn btn-ghost"
                 style={{ minHeight: '48px', fontSize: '13px', width: '100%' }}
               >
@@ -452,7 +466,10 @@ export const Navbar = () => {
               </Link>
               <Link
                 to="/book"
-                onClick={() => setMobileOpen(false)}
+                onClick={() => {
+                  trackEvent('InitiateCheckout', { location: 'navbar_mobile', button: 'Experience SWEAT' });
+                  setMobileOpen(false);
+                }}
                 className="btn btn-red"
                 style={{ minHeight: '48px', fontSize: '13px', width: '100%' }}
               >

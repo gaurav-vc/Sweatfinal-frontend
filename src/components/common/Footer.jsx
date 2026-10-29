@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SweatLogo from './SweatLogo';
+import { trackEvent } from '../../services/pixelService';
 
 export const Footer = () => {
   return (
@@ -17,10 +18,20 @@ export const Footer = () => {
               Where the stars train. Now it's you. Olympic lifting, gymnastics conditioning and athletic reformer Pilates under one standard.
             </p>
             <div style={{ display: 'flex', gap: '12px', marginTop: '8px', flexWrap: 'wrap' }}>
-              <Link to="/book" className="btn btn-red" style={{ minHeight: '46px', padding: '0 20px', fontSize: '12px' }}>
+              <Link
+                to="/book"
+                onClick={() => trackEvent('InitiateCheckout', { location: 'footer', button: 'Book Your Visit' })}
+                className="btn btn-red"
+                style={{ minHeight: '46px', padding: '0 20px', fontSize: '12px' }}
+              >
                 Book Your Visit
               </Link>
-              <Link to="/assessment" className="btn btn-ghost" style={{ minHeight: '46px', padding: '0 18px', fontSize: '12px' }}>
+              <Link
+                to="/assessment"
+                onClick={() => trackEvent('Schedule', { location: 'footer', button: 'Assessment' })}
+                className="btn btn-ghost"
+                style={{ minHeight: '46px', padding: '0 18px', fontSize: '12px' }}
+              >
                 Assessment
               </Link>
             </div>

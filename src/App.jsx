@@ -6,6 +6,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 // Common Components
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
+import PixelMonitor from './components/common/PixelMonitor';
+import { trackPageView } from './services/pixelService';
 
 // 17 Public Pages
 import HomePage from './pages/HomePage';
@@ -44,6 +46,15 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+// Meta Pixel real-time PageView tracker
+function PixelRouteTracker() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    trackPageView(pathname);
   }, [pathname]);
   return null;
 }
@@ -96,6 +107,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ScrollToTop />
+      <PixelRouteTracker />
       <Routes>
         {/* PUBLIC 17-PAGE ROUTES + COMPATIBILITY PROGRAM ALIASES */}
         <Route element={<PublicLayout />}>
@@ -169,6 +181,7 @@ export default function App() {
         {/* CATCH ALL */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <PixelMonitor />
     </AuthProvider>
   );
 }

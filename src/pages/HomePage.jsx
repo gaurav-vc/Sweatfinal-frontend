@@ -9,6 +9,7 @@ import SlotBookingWidget from '../components/public/SlotBookingWidget';
 import MarqueeBanner from '../components/common/MarqueeBanner';
 import AnimatedHeadline from '../components/common/AnimatedHeadline';
 import { resolveMediaUrl } from '../utils/mediaUrl';
+import { trackEvent } from '../services/pixelService';
 
 export const HomePage = () => {
   const [data, setData] = useState(null);
@@ -108,10 +109,20 @@ export const HomePage = () => {
               {hero.subheading || "The coaches and team behind Bollywood's best-known bodies are now coaching Andheri. Stronger, leaner and surer of yourself, with the same system the stars trust."}
             </p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link to="/book" className="btn btn-red" style={{ minHeight: '64px', padding: '0 36px' }}>
+              <Link
+                to="/book"
+                onClick={() => trackEvent('InitiateCheckout', { location: 'home_hero', button: hero.cta_primary_text || "Experience SWEAT" })}
+                className="btn btn-red"
+                style={{ minHeight: '64px', padding: '0 36px' }}
+              >
                 {hero.cta_primary_text || "Experience SWEAT"}
               </Link>
-              <Link to="/assessment" className="btn btn-ghost" style={{ minHeight: '64px', padding: '0 32px' }}>
+              <Link
+                to="/assessment"
+                onClick={() => trackEvent('Schedule', { location: 'home_hero', button: hero.cta_secondary_text || "Book a fitness assessment" })}
+                className="btn btn-ghost"
+                style={{ minHeight: '64px', padding: '0 32px' }}
+              >
                 {hero.cta_secondary_text || "Book a fitness assessment"}
               </Link>
             </div>

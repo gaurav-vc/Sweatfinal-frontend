@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import bookingsApi from '../../api/bookingsApi';
+import { trackEvent } from '../../services/pixelService';
 
 export const SlotBookingWidget = ({
   leadType = 'experience',
@@ -39,6 +40,21 @@ export const SlotBookingWidget = ({
         selected_day: selectedDay,
         selected_time: selectedTime,
       });
+
+      // Isolated Meta Pixel Event: Fires real-time 'Lead' & 'Schedule' events
+      try {
+        trackEvent('Lead', {
+          lead_type: leadType,
+          selected_day: selectedDay,
+          selected_time: selectedTime,
+          page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+          button_text: buttonText,
+          currency: 'INR',
+          value: 0
+        });
+      } catch (pxErr) {
+        // Zero interference with booking confirmation
+      }
 
       setFeedback({
         type: 'success',
