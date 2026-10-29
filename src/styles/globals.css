@@ -61,6 +61,25 @@ a:hover {
   text-transform: uppercase;
 }
 
+/* Master Desktop Display Typography */
+.h1, .disp.h1, [class*="disp"][class*="h1"], h1.disp {
+  font-size: clamp(84px, 13vw, 220px);
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+}
+
+.h2, .disp.h2, [class*="disp"][class*="h2"], h2.disp {
+  font-size: clamp(60px, 8.5vw, 140px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+
+.h3, .disp.h3, [class*="disp"][class*="h3"], h3.disp {
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+}
+
 .num {
   font-family: 'Bebas Neue', sans-serif;
   line-height: 1;

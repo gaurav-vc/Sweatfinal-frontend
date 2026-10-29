@@ -84,7 +84,7 @@ export const HomePage = () => {
           </div>
 
           {/* Master Headline */}
-          <AnimatedHeadline className="disp h1">
+          <AnimatedHeadline className="disp h1" style={{ fontSize: 'clamp(84px, 14vw, 240px)', lineHeight: 0.84 }}>
             WHERE THE<br />
             STARS TRAIN.<br />
             <span className="out">NOW IT'S YOU.</span>
@@ -163,7 +163,7 @@ export const HomePage = () => {
         <div className="wrap">
           <div className="split" style={{ alignItems: 'start' }}>
             
-            <AnimatedHeadline className="disp h2">
+            <AnimatedHeadline className="disp h2" style={{ fontSize: 'clamp(64px, 8.5vw, 150px)', lineHeight: 0.88 }}>
               THIS IS NOT<br />
               A GYM.<br />
               <span className="out-dk">IT'S WHERE<br />YOU BECOME.</span>
