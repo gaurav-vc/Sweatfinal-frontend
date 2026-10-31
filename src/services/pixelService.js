@@ -4,7 +4,7 @@
 // ==========================================================================
 
 const STORAGE_KEY = 'sweat_meta_pixel_config';
-export const DEFAULT_PIXEL_ID = '1373876318156695';
+export const DEFAULT_PIXEL_ID = '1131319899356928';
 
 // Read dynamic configuration from localStorage or default
 export function getPixelConfig() {
@@ -12,8 +12,10 @@ export function getPixelConfig() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
+      // Automatically migrate from old pixel ID if present in storage
+      const resolvedId = (parsed.pixelId && parsed.pixelId !== '1373876318156695') ? parsed.pixelId : DEFAULT_PIXEL_ID;
       return {
-        pixelId: parsed.pixelId || DEFAULT_PIXEL_ID,
+        pixelId: resolvedId,
         enabled: parsed.enabled !== false,
         debugMode: parsed.debugMode !== false,
         showMonitor: parsed.showMonitor !== false,

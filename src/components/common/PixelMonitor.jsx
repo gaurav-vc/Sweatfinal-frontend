@@ -369,7 +369,7 @@ export const PixelMonitor = () => {
                     type="text"
                     value={tempPixelId}
                     onChange={(e) => setTempPixelId(e.target.value)}
-                    placeholder="e.g. 1373876318156695"
+                    placeholder="e.g. 1131319899356928"
                     style={{
                       flex: 1,
                       background: '#1A1A1A',
