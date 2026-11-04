@@ -8,6 +8,7 @@ import bookingsApi from '../../api/bookingsApi';
  */
 export const FoundingPassForm = ({
   leadType = 'experience',
+  leadSource = 'SWEAT_WEBSITE',
   theme = 'red', // 'red' or 'dark'
   title = "CLAIM YOUR EXCLUSIVE FOUNDING PASS",
   eyebrow = "LIMITED FOUNDING MEMBER ACCESS",
@@ -33,13 +34,9 @@ export const FoundingPassForm = ({
 
   const isRed = theme === 'red';
 
-  // Determine standard CRM lead_source and interested_in
+  // Lead source is standardized to SWEAT_WEBSITE (not landing pages)
   const getLeadSource = () => {
-    const t = String(leadType || '').toLowerCase();
-    if (t.includes('bootcamp')) return 'LANDING_PAGE_SWEAT_BOOTCAMP';
-    if (t.includes('pilates')) return 'LANDING_PAGE_SWEAT_PILATES';
-    if (t.includes('elite')) return 'LANDING_PAGE_SWEAT_ELITE';
-    return 'WEBSITE';
+    return leadSource || 'SWEAT_WEBSITE';
   };
 
   const getInterestedIn = () => {
