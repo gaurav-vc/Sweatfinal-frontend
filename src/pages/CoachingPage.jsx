@@ -125,7 +125,8 @@ export const CoachingPage = () => {
         </div>
       </section>
 
-      {/* TRANSFORMATIONS */}
+      {/* TRANSFORMATIONS (HIDDEN FOR NOW) */}
+      {/*
       <section style={{ padding: '112px 0', background: '#0A0A0A', minHeight: '900px' }}>
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
@@ -137,6 +138,7 @@ export const CoachingPage = () => {
           <TransformationSlider transformations={transformations} />
         </div>
       </section>
+      */}
 
       {/* BOOKING */}
       <section id="book" style={{ padding: '104px 0 120px', background: '#0A0A0A', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>

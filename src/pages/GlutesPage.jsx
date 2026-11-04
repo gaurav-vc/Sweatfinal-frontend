@@ -24,6 +24,8 @@ export const GlutesPage = () => {
     <div className="sw">
       {/* HERO */}
       <section className="hero-section">
+        {/* VIDEO / HERO BACKGROUND (COMMENTED OUT FOR NOW) */}
+        {/*
         <div style={{ position: 'absolute', inset: 0 }}>
           {videoSrc ? (
             <video
@@ -47,6 +49,7 @@ export const GlutesPage = () => {
             </div>
           )}
         </div>
+        */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.6) 55%, rgba(10, 10, 10, 0.25) 100%)' }} />
         <div style={{ position: 'absolute', inset: 'auto 0 0', height: '240px', background: 'linear-gradient(rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.95))' }} />
 
@@ -133,7 +136,8 @@ export const GlutesPage = () => {
         </div>
       </section>
 
-      {/* TRANSFORMATIONS */}
+      {/* TRANSFORMATIONS (HIDDEN FOR NOW) */}
+      {/*
       <section style={{ padding: '112px 0', background: '#0A0A0A', minHeight: '900px' }}>
         <div className="wrap">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
@@ -145,6 +149,7 @@ export const GlutesPage = () => {
           <TransformationSlider transformations={transformations} />
         </div>
       </section>
+      */}
 
       {/* BOOKING */}
       <section id="book" style={{ padding: '104px 0 120px', background: '#0A0A0A', borderTop: '1px solid rgba(255, 255, 255, 0.12)' }}>
