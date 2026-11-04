@@ -5,6 +5,7 @@ import SlotBookingWidget from '../components/public/SlotBookingWidget';
 import MarqueeBanner from '../components/common/MarqueeBanner';
 import AnimatedHeadline from '../components/common/AnimatedHeadline';
 import { resolveMediaUrl } from '../utils/mediaUrl';
+import AdaptiveMedia from '../components/common/AdaptiveMedia';
 
 export const BootcampPage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -78,27 +79,11 @@ export const BootcampPage = () => {
       {/* HERO */}
       <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
-          {videoSrc ? (
-            <video
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-            />
-          ) : imageSrc ? (
-            <img
-              src={imageSrc}
-              alt="SWEAT Bootcamp Hero"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-            />
-          ) : (
-            <div className="shot" style={{ width: '100%', height: '100%', border: 0 }}>
-              <b>FILM · Hero · member mid-lift</b>
-              <span>Barbell overhead, chalk dust, rig behind · 4:5 · looping, muted, behind the title</span>
-            </div>
-          )}
+          <AdaptiveMedia
+            src={videoSrc || imageSrc || '/media/uploads/2026/11/Remo_Dsouza.mp4'}
+            alt="SWEAT Bootcamp Hero"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+          />
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.6) 55%, rgba(10, 10, 10, 0.25) 100%)' }} />
         <div style={{ position: 'absolute', inset: 'auto 0 0', height: '240px', background: 'linear-gradient(rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.95))' }} />
@@ -369,9 +354,18 @@ export const BootcampPage = () => {
       <section style={{ padding: '112px 0', background: '#0A0A0A', minHeight: '760px' }}>
         <div className="wrap">
           <div className="split">
-            <div className="shot" style={{ height: '540px' }}>
-              <b>Coaches on the floor · action shot</b>
-              <span>Teaching Trainer commanding · Assistant Trainer correcting</span>
+            <div className="shot" style={{ height: '540px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+              <AdaptiveMedia
+                src={data?.program?.featured_video || data?.program?.hero_image || '/media/uploads/2026/11/Remo_Dsouza.mp4'}
+                alt="Coaches on the floor"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                fallback={
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '24px' }}>
+                    <b>Coaches on the floor · action shot</b>
+                    <span>Teaching Trainer commanding · Assistant Trainer correcting</span>
+                  </div>
+                }
+              />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>

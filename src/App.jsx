@@ -50,7 +50,8 @@ function ScrollToTop() {
   return null;
 }
 
-// Meta Pixel real-time PageView tracker
+// Meta Pixel real-time PageView tracker (Commented out per request)
+/*
 function PixelRouteTracker() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -58,6 +59,7 @@ function PixelRouteTracker() {
   }, [pathname]);
   return null;
 }
+*/
 
 // Public Page Shell with Framer Motion Page Transitions
 function PublicLayout() {
@@ -107,7 +109,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ScrollToTop />
-      <PixelRouteTracker />
+      {/* <PixelRouteTracker /> */}
       <Routes>
         {/* PUBLIC 17-PAGE ROUTES + COMPATIBILITY PROGRAM ALIASES */}
         <Route element={<PublicLayout />}>
@@ -181,7 +183,8 @@ export default function App() {
         {/* CATCH ALL */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <PixelMonitor />
+      {/* Meta Pixel Monitor (Commented out per request) */}
+      {/* <PixelMonitor /> */}
     </AuthProvider>
   );
 }

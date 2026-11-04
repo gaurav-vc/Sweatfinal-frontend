@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Clock, Phone, Send, CheckCircle2 } from 'lucide-react';
 import contentApi from '../api/contentApi';
 import bookingsApi from '../api/bookingsApi';
+import AdaptiveMedia from '../components/common/AdaptiveMedia';
 
 export default function VisitPage() {
   const [data, setData] = useState({
@@ -215,8 +216,13 @@ export default function VisitPage() {
 
           <div className="grid4" style={{ marginTop: '56px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div className="shot shot-lt" style={{ height: '360px' }}>
-                <b>Bootcamp floor</b>
+              <div className="shot shot-lt" style={{ height: '360px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+                <AdaptiveMedia
+                  src={data.programs?.find(p => p.slug === 'bootcamp')?.hero_image || data.programs?.find(p => p.slug === 'bootcamp')?.featured_video || '/media/uploads/2026/11/Remo_Dsouza.mp4'}
+                  alt="Bootcamp floor"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fallback={<b>Bootcamp floor</b>}
+                />
               </div>
               <h3 className="disp" style={{ fontSize: '44px' }}>Bootcamp floor</h3>
               <p style={{ margin: 0, color: '#4A4A4A', lineHeight: 1.55 }}>
@@ -224,8 +230,13 @@ export default function VisitPage() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div className="shot shot-lt" style={{ height: '360px' }}>
-                <b>Pilates studio</b>
+              <div className="shot shot-lt" style={{ height: '360px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+                <AdaptiveMedia
+                  src={data.programs?.find(p => p.slug === 'pilates')?.hero_image || data.programs?.find(p => p.slug === 'pilates')?.featured_video || '/media/uploads/2026/11/SWEAT_Pilates_Horizontal_v3.mp4'}
+                  alt="Pilates studio"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fallback={<b>Pilates studio</b>}
+                />
               </div>
               <h3 className="disp" style={{ fontSize: '44px' }}>Pilates studio</h3>
               <p style={{ margin: 0, color: '#4A4A4A', lineHeight: 1.55 }}>
@@ -233,8 +244,13 @@ export default function VisitPage() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div className="shot shot-lt" style={{ height: '360px' }}>
-                <b>Recovery suite</b>
+              <div className="shot shot-lt" style={{ height: '360px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+                <AdaptiveMedia
+                  src={data.programs?.find(p => p.slug === 'recovery')?.hero_image || data.programs?.find(p => p.slug === 'recovery')?.featured_video}
+                  alt="Recovery suite"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fallback={<b>Recovery suite</b>}
+                />
               </div>
               <h3 className="disp" style={{ fontSize: '44px' }}>Recovery suite</h3>
               <p style={{ margin: 0, color: '#4A4A4A', lineHeight: 1.55 }}>
@@ -242,8 +258,13 @@ export default function VisitPage() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div className="shot shot-lt" style={{ height: '360px' }}>
-                <b>Open Box</b>
+              <div className="shot shot-lt" style={{ height: '360px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+                <AdaptiveMedia
+                  src={data.programs?.find(p => p.slug === 'coaching')?.hero_image || data.programs?.find(p => p.slug === 'coaching')?.featured_video}
+                  alt="Open Box"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  fallback={<b>Open Box</b>}
+                />
               </div>
               <h3 className="disp" style={{ fontSize: '44px' }}>Open Box</h3>
               <p style={{ margin: 0, color: '#4A4A4A', lineHeight: 1.55 }}>

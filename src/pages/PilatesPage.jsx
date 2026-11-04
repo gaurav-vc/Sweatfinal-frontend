@@ -5,6 +5,7 @@ import SlotBookingWidget from '../components/public/SlotBookingWidget';
 import MarqueeBanner from '../components/common/MarqueeBanner';
 import AnimatedHeadline from '../components/common/AnimatedHeadline';
 import { resolveMediaUrl } from '../utils/mediaUrl';
+import AdaptiveMedia from '../components/common/AdaptiveMedia';
 
 export const PilatesPage = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -78,27 +79,11 @@ export const PilatesPage = () => {
       {/* HERO */}
       <section className="hero-section">
         <div style={{ position: 'absolute', inset: 0 }}>
-          {videoSrc ? (
-            <video
-              src={videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-            />
-          ) : imageSrc ? (
-            <img
-              src={imageSrc}
-              alt="SWEAT Pilates Hero"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
-            />
-          ) : (
-            <div className="shot" style={{ width: '100%', height: '100%', border: 0 }}>
-              <b>FILM · Hero · reformer, mid-stretch</b>
-              <span>Overhead on reformer, black studio · 4:5 · looping, muted, behind the title</span>
-            </div>
-          )}
+          <AdaptiveMedia
+            src={videoSrc || imageSrc || '/media/uploads/2026/11/SWEAT_Pilates_Horizontal_v3.mp4'}
+            alt="SWEAT Pilates Hero"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+          />
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.6) 55%, rgba(10, 10, 10, 0.25) 100%)' }} />
         <div style={{ position: 'absolute', inset: 'auto 0 0', height: '240px', background: 'linear-gradient(rgba(10, 10, 10, 0), rgba(10, 10, 10, 0.95))' }} />
@@ -359,9 +344,18 @@ export const PilatesPage = () => {
               </div>
             </div>
 
-            <div className="shot shot-lt" style={{ height: '640px' }}>
-              <b>Reformer room · wide</b>
-              <span>Eight reformers, low light, red signage</span>
+            <div className="shot shot-lt" style={{ height: '640px', padding: 0, overflow: 'hidden', position: 'relative' }}>
+              <AdaptiveMedia
+                src={data?.program?.featured_video || data?.program?.hero_image || '/media/uploads/2026/11/SWEAT_Pilates_Horizontal_v3.mp4'}
+                alt="Reformer room wide"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                fallback={
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '24px' }}>
+                    <b>Reformer room · wide</b>
+                    <span>Eight reformers, low light, red signage</span>
+                  </div>
+                }
+              />
             </div>
           </div>
         </div>
