@@ -3,6 +3,7 @@ import { Dumbbell, Plus, Trash2, Edit3, Save, CheckCircle2, Upload, Film, Image 
 import apiClient from '../api/apiClient';
 import { ENDPOINTS } from '../api/endpoints';
 import mediaApi from '../api/mediaApi';
+import { resolveMediaUrl, isVideoMedia } from '../utils/mediaUrl';
 
 export default function AdminPrograms() {
   const [programs, setPrograms] = useState([]);
@@ -278,18 +279,18 @@ export default function AdminPrograms() {
             </div>
 
             <div className="grid2">
-              {/* HERO PHOTO FIELD */}
+              {/* HERO PHOTO / MEDIA FIELD */}
               <div className="field">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <label>Hero Photo URL</label>
-                  <span style={{ fontSize: '11px', color: '#64748B' }}>1200×800 px · JPG/WebP (&lt;3MB)</span>
+                  <label>Hero Media URL (Photo or Video)</label>
+                  <span style={{ fontSize: '11px', color: '#64748B' }}>1200×800 px · JPG/PNG/MP4</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="text"
                     value={editingItem.hero_image || ''}
                     onChange={e => setEditingItem({ ...editingItem, hero_image: e.target.value })}
-                    placeholder="https://... /photo.jpg"
+                    placeholder="https://... /photo.jpg or .mp4"
                     style={{ flex: 1 }}
                   />
                   <label className="btn btn-ghost" style={{ cursor: 'pointer', padding: '0 14px', minHeight: '46px', borderRadius: '6px' }}>
@@ -297,7 +298,7 @@ export default function AdminPrograms() {
                     <span style={{ fontSize: '12px' }}>{uploading ? '...' : 'Upload'}</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,video/*"
                       onChange={e => handleMediaUpload(e, 'hero_image')}
                       style={{ display: 'none' }}
                     />
@@ -307,7 +308,7 @@ export default function AdminPrograms() {
                       type="button"
                       onClick={() => handleRemoveMedia('hero_image')}
                       className="btn"
-                      title="Remove hero photo"
+                      title="Remove hero media"
                       style={{
                         background: '#FEF2F2',
                         border: '1px solid #FCA5A5',
@@ -339,7 +340,9 @@ export default function AdminPrograms() {
                     gap: '6px'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>Photo Preview:</span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>
+                        {isVideoMedia(editingItem.hero_image) ? 'Hero Video Preview:' : 'Hero Photo Preview:'}
+                      </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         {imageDim && (
                           <span className="pill" style={{ background: '#E0F2FE', color: '#0369A1', border: '1px solid #BAE6FD', fontSize: '10px', fontWeight: 700 }}>
@@ -355,28 +358,40 @@ export default function AdminPrograms() {
                         </button>
                       </div>
                     </div>
-                    <img
-                      src={editingItem.hero_image}
-                      alt="Program hero"
-                      onLoad={e => setImageDim(`${e.target.naturalWidth} × ${e.target.naturalHeight} px`)}
-                      style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
-                    />
+                    {isVideoMedia(editingItem.hero_image) ? (
+                      <video
+                        src={resolveMediaUrl(editingItem.hero_image)}
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
+                      />
+                    ) : (
+                      <img
+                        src={resolveMediaUrl(editingItem.hero_image)}
+                        alt="Program hero"
+                        onLoad={e => setImageDim(`${e.target.naturalWidth} × ${e.target.naturalHeight} px`)}
+                        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
+                      />
+                    )}
                   </div>
                 )}
               </div>
 
-              {/* FEATURED VIDEO FIELD */}
+              {/* FEATURED MEDIA FIELD */}
               <div className="field">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <label>Featured Video Loop URL</label>
-                  <span style={{ fontSize: '11px', color: '#64748B' }}>1920×1080 px · MP4/WebM (&lt;25MB)</span>
+                  <label>Featured Media URL (Photo or Video)</label>
+                  <span style={{ fontSize: '11px', color: '#64748B' }}>1920×1080 px · MP4/WebM/JPG</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="text"
                     value={editingItem.featured_video || ''}
                     onChange={e => setEditingItem({ ...editingItem, featured_video: e.target.value })}
-                    placeholder="https://... /loop.mp4"
+                    placeholder="https://... /loop.mp4 or /photo.jpg"
                     style={{ flex: 1 }}
                   />
                   <label className="btn btn-ghost" style={{ cursor: 'pointer', padding: '0 14px', minHeight: '46px', borderRadius: '6px' }}>
@@ -384,7 +399,7 @@ export default function AdminPrograms() {
                     <span style={{ fontSize: '12px' }}>{uploading ? '...' : 'Upload'}</span>
                     <input
                       type="file"
-                      accept="video/*"
+                      accept="image/*,video/*"
                       onChange={e => handleMediaUpload(e, 'featured_video')}
                       style={{ display: 'none' }}
                     />
@@ -394,7 +409,7 @@ export default function AdminPrograms() {
                       type="button"
                       onClick={() => handleRemoveMedia('featured_video')}
                       className="btn"
-                      title="Remove featured video"
+                      title="Remove featured media"
                       style={{
                         background: '#FEF2F2',
                         border: '1px solid #FCA5A5',
@@ -426,7 +441,9 @@ export default function AdminPrograms() {
                     gap: '6px'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>Video Loop Preview:</span>
+                      <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>
+                        {isVideoMedia(editingItem.featured_video) ? 'Featured Video Preview:' : 'Featured Photo Preview:'}
+                      </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         {videoDim && (
                           <span className="pill" style={{ background: '#E0F2FE', color: '#0369A1', border: '1px solid #BAE6FD', fontSize: '10px', fontWeight: 700 }}>
@@ -442,12 +459,24 @@ export default function AdminPrograms() {
                         </button>
                       </div>
                     </div>
-                    <video
-                      src={editingItem.featured_video}
-                      controls
-                      onLoadedMetadata={e => setVideoDim(`${e.target.videoWidth} × ${e.target.videoHeight} px`)}
-                      style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
-                    />
+                    {isVideoMedia(editingItem.featured_video) ? (
+                      <video
+                        src={resolveMediaUrl(editingItem.featured_video)}
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        onLoadedMetadata={e => setVideoDim(`${e.target.videoWidth} × ${e.target.videoHeight} px`)}
+                        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
+                      />
+                    ) : (
+                      <img
+                        src={resolveMediaUrl(editingItem.featured_video)}
+                        alt="Featured media preview"
+                        style={{ height: '140px', width: '100%', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
+                      />
+                    )}
                   </div>
                 )}
               </div>

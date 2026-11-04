@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, Trash2, Edit3, Save, Upload, CheckCircle2, Maximize2 } from 'lucide-react';
+import { Users, Plus, Trash2, Edit3, Save, Upload, CheckCircle2, Maximize2, Image as ImageIcon, Film } from 'lucide-react';
 import apiClient from '../api/apiClient';
 import { ENDPOINTS } from '../api/endpoints';
 import mediaApi from '../api/mediaApi';
+import { resolveMediaUrl, isVideoMedia } from '../utils/mediaUrl';
 
 export default function AdminTeam() {
   const [coaches, setCoaches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingItem, setEditingItem] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadingCardId, setUploadingCardId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [detectedDim, setDetectedDim] = useState('');
@@ -48,35 +50,87 @@ export default function AdminTeam() {
     setSuccessMsg('');
   };
 
-  const handlePhotoUpload = async (e) => {
+  const handleMediaUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
+    setSuccessMsg('');
     try {
       const res = await mediaApi.uploadFile(file, `coach_${file.name}`);
       const fileUrl = res.file_url || res.file;
+      const isVideo = (file.type && file.type.startsWith('video/')) || isVideoMedia(fileUrl);
       setEditingItem(prev => ({
         ...prev,
         photo: fileUrl,
         photo_url: fileUrl
       }));
-      setSuccessMsg('Coach photo uploaded successfully!');
+      setSuccessMsg(`Coach ${isVideo ? 'video' : 'photo'} uploaded successfully!`);
     } catch (err) {
-      alert('Failed to upload coach photo.');
+      alert('Failed to upload coach media: ' + (err.response?.data?.detail || err.message));
     } finally {
       setUploading(false);
+      e.target.value = '';
+    }
+  };
+
+  // Direct 1-click upload directly on any coach card in the list
+  const handleDirectCardUpload = async (e, coach) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingCardId(coach.id);
+    setSuccessMsg('');
+    try {
+      const res = await mediaApi.uploadFile(file, `coach_${file.name}`);
+      const fileUrl = res.file_url || res.file;
+      const isVideo = (file.type && file.type.startsWith('video/')) || isVideoMedia(fileUrl);
+      const payload = {
+        ...coach,
+        name: coach.name,
+        role_title: coach.role_title || coach.title,
+        title: coach.role_title || coach.title,
+        photo: fileUrl,
+        photo_url: fileUrl,
+      };
+      await apiClient.put(`${ENDPOINTS.CMS.COACHES}${coach.id}/`, payload);
+      setCoaches(prev => prev.map(c => c.id === coach.id ? { ...c, ...payload } : c));
+      setSuccessMsg(`"${file.name}" uploaded and saved for Coach ${coach.name} in real time!`);
+    } catch (err) {
+      alert('Failed to upload media: ' + (err.response?.data?.detail || err.message));
+    } finally {
+      setUploadingCardId(null);
+      e.target.value = '';
+    }
+  };
+
+  // Direct 1-click remove directly on any coach card in the list
+  const handleDirectCardRemove = async (coach) => {
+    if (!window.confirm(`Remove media for Coach ${coach.name}?`)) return;
+    try {
+      const payload = {
+        ...coach,
+        name: coach.name,
+        role_title: coach.role_title || coach.title,
+        title: coach.role_title || coach.title,
+        photo: '',
+        photo_url: '',
+      };
+      await apiClient.put(`${ENDPOINTS.CMS.COACHES}${coach.id}/`, payload);
+      setCoaches(prev => prev.map(c => c.id === coach.id ? { ...c, ...payload } : c));
+      setSuccessMsg(`Media removed for Coach ${coach.name}.`);
+    } catch (err) {
+      alert('Failed to remove media: ' + (err.response?.data?.detail || err.message));
     }
   };
 
   const handleRemovePhoto = () => {
-    if (!window.confirm('Remove coach profile photo?')) return;
+    if (!window.confirm('Remove coach profile media?')) return;
     setEditingItem(prev => ({
       ...prev,
       photo: '',
       photo_url: ''
     }));
     setDetectedDim('');
-    setSuccessMsg('Coach photo removed.');
+    setSuccessMsg('Coach media removed.');
   };
 
   const handleSave = async (e) => {
@@ -101,7 +155,7 @@ export default function AdminTeam() {
       setEditingItem(null);
       loadCoaches();
     } catch (err) {
-      alert('Error saving coach profile: ' + (err.response?.data?.detail || err.message));
+      alert('Error saving coach: ' + (err.response?.data?.detail || err.message));
     } finally {
       setSaving(false);
     }
@@ -114,7 +168,7 @@ export default function AdminTeam() {
       setCoaches(coaches.filter(c => c.id !== id));
       if (editingItem?.id === id) setEditingItem(null);
     } catch (err) {
-      alert('Error deleting coach profile: ' + err.message);
+      alert('Error deleting coach: ' + err.message);
     }
   };
 
@@ -122,9 +176,9 @@ export default function AdminTeam() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h1 className="disp" style={{ fontSize: '44px', margin: 0, color: '#0F172A' }}>COACHES & LEADERSHIP TEAM</h1>
+          <h1 className="disp" style={{ fontSize: '44px', margin: 0, color: '#0F172A' }}>COACHES &amp; LEADERSHIP TEAM</h1>
           <p style={{ margin: '4px 0 0', color: '#64748B', fontSize: '14px' }}>
-            The elite coaching staff and master trainers behind SWEAT HQ
+            The elite coaching staff and master trainers behind SWEAT HQ (supports Photos and Videos)
           </p>
         </div>
         <button
@@ -180,7 +234,7 @@ export default function AdminTeam() {
             </button>
           </div>
 
-          <div className="grid3">
+          <div className="grid2">
             <div className="field">
               <label>Coach Full Name</label>
               <input
@@ -188,14 +242,25 @@ export default function AdminTeam() {
                 required
                 value={editingItem.name || ''}
                 onChange={e => setEditingItem({ ...editingItem, name: e.target.value })}
-                placeholder="e.g. Shivoham"
+                placeholder="e.g. Praveen Nair"
               />
             </div>
+            <div className="field">
+              <label>Display Order Priority</label>
+              <input
+                type="number"
+                value={editingItem.display_order || 1}
+                onChange={e => setEditingItem({ ...editingItem, display_order: parseInt(e.target.value) || 1 })}
+                placeholder="e.g. 1"
+              />
+            </div>
+          </div>
+
+          <div className="grid2">
             <div className="field">
               <label>Role / Title</label>
               <input
                 type="text"
-                required
                 value={editingItem.role_title || editingItem.title || ''}
                 onChange={e => setEditingItem({ ...editingItem, role_title: e.target.value, title: e.target.value })}
                 placeholder="e.g. Founder & Head Coach"
@@ -224,9 +289,9 @@ export default function AdminTeam() {
             </div>
             <div className="field">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label>Photo URL / Upload</label>
+                <label>Media URL / Upload (Photo or Video)</label>
                 <span style={{ fontSize: '11px', color: '#64748B' }}>
-                  Rec: 800×1000 px (4:5) · &lt; 3MB
+                  Rec: 800×1000 px (4:5)
                 </span>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -234,7 +299,7 @@ export default function AdminTeam() {
                   type="text"
                   value={editingItem.photo || editingItem.photo_url || ''}
                   onChange={e => setEditingItem({ ...editingItem, photo: e.target.value, photo_url: e.target.value })}
-                  placeholder="https://... /coach.jpg"
+                  placeholder="https://... /coach.jpg or .mp4"
                   style={{ flex: 1 }}
                 />
                 <label className="btn btn-ghost" style={{ cursor: 'pointer', padding: '0 14px', minHeight: '46px', borderRadius: '6px' }}>
@@ -242,8 +307,8 @@ export default function AdminTeam() {
                   <span style={{ fontSize: '12px' }}>{uploading ? '...' : 'Upload'}</span>
                   <input
                     type="file"
-                    accept="image/*"
-                    onChange={handlePhotoUpload}
+                    accept="image/*,video/*"
+                    onChange={handleMediaUpload}
                     style={{ display: 'none' }}
                   />
                 </label>
@@ -252,7 +317,7 @@ export default function AdminTeam() {
                     type="button"
                     onClick={handleRemovePhoto}
                     className="btn"
-                    title="Remove coach photo"
+                    title="Remove coach media"
                     style={{
                       background: '#FEF2F2',
                       border: '1px solid #FCA5A5',
@@ -283,44 +348,40 @@ export default function AdminTeam() {
               border: '1px solid #E2E8F0',
               display: 'flex',
               flexDirection: 'column',
-              gap: '8px'
+              gap: '6px'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>
-                  Photo Preview:
-                </span>
-                <button
-                  type="button"
-                  onClick={handleRemovePhoto}
-                  style={{ background: 'none', border: 'none', color: '#DC2626', cursor: 'pointer', fontSize: '11px', fontWeight: 700 }}
-                >
-                  Remove
-                </button>
-              </div>
-              <img
-                src={editingItem.photo || editingItem.photo_url}
-                alt="Coach preview"
-                onLoad={e => setDetectedDim(`${e.target.naturalWidth} × ${e.target.naturalHeight} px`)}
-                style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #CBD5E1' }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px' }}>
-                {detectedDim && (
-                  <span className="pill" style={{ background: '#E0F2FE', color: '#0369A1', border: '1px solid #BAE6FD', fontWeight: 700 }}>
-                    Detected: {detectedDim}
-                  </span>
+              <span style={{ fontSize: '11px', fontWeight: 800, color: '#0F172A', textTransform: 'uppercase' }}>
+                {isVideoMedia(editingItem.photo || editingItem.photo_url) ? 'Video Preview:' : 'Photo Preview:'}
+              </span>
+              <div style={{ height: '240px', borderRadius: '6px', overflow: 'hidden', background: '#000' }}>
+                {isVideoMedia(editingItem.photo || editingItem.photo_url) ? (
+                  <video
+                    src={resolveMediaUrl(editingItem.photo || editingItem.photo_url)}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <img
+                    src={resolveMediaUrl(editingItem.photo || editingItem.photo_url)}
+                    alt="Coach preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 )}
-                <span style={{ color: '#64748B' }}>Rec: 800×1000</span>
               </div>
             </div>
           )}
 
           <div className="field">
-            <label>Biography & Credentials</label>
+            <label>Biography &amp; Coaching Philosophy</label>
             <textarea
-              rows="3"
+              rows="4"
               value={editingItem.bio || ''}
               onChange={e => setEditingItem({ ...editingItem, bio: e.target.value })}
-              placeholder="e.g. Pioneer of functional fitness in India. Over 15 years coaching Bollywood elite..."
+              placeholder="Detailed background, star transformations coached, and coaching style..."
             />
           </div>
 
@@ -330,23 +391,25 @@ export default function AdminTeam() {
             </button>
             <button type="submit" disabled={saving || uploading} className="btn btn-red" style={{ minWidth: '180px', borderRadius: '6px' }}>
               <Save size={16} />
-              <span>{saving ? 'Saving...' : 'Save Profile'}</span>
+              <span>{saving ? 'Saving...' : 'Save Coach Profile'}</span>
             </button>
           </div>
         </form>
       )}
 
-      {/* COACH CARDS GRID (WHITE & RED) */}
+      {/* LIST OF COACHES (WHITE & RED CARDS WITH INSTANT UPLOAD OPTION) */}
       {loading ? (
-        <div style={{ padding: '60px', textAlign: 'center', color: '#64748B' }}>Loading team members...</div>
+        <div style={{ padding: '60px', textAlign: 'center', color: '#64748B' }}>Loading coaches...</div>
       ) : coaches.length === 0 ? (
         <div className="tile" style={{ textAlign: 'center', padding: '60px', color: '#94A3B8' }}>
-          No coaches created yet. Click "+ Add Coach Profile" to list your staff!
+          No coaches listed yet. Click "+ Add Coach Profile" to list your first trainer!
         </div>
       ) : (
         <div className="grid4">
           {coaches.map(coach => {
             const photoSrc = coach.photo || coach.photo_url;
+            const isVideo = isVideoMedia(photoSrc);
+
             return (
               <div
                 key={coach.id}
@@ -362,17 +425,136 @@ export default function AdminTeam() {
                   boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
                 }}
               >
-                <div className="shot" style={{ height: '300px', borderRadius: '8px', overflow: 'hidden' }}>
+                <div
+                  className="shot"
+                  style={{
+                    height: '300px',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    background: '#F8FAFC',
+                    position: 'relative'
+                  }}
+                >
                   {photoSrc ? (
-                    <img
-                      src={photoSrc}
-                      alt={coach.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
+                    isVideo ? (
+                      <video
+                        src={resolveMediaUrl(photoSrc)}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        controls
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <img
+                        src={resolveMediaUrl(photoSrc)}
+                        alt={coach.name}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )
                   ) : (
-                    <div style={{ padding: '20px', textAlign: 'center' }}>
+                    <div style={{
+                      padding: '20px',
+                      textAlign: 'center',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100%'
+                    }}>
                       <b style={{ color: '#0F172A', fontSize: '18px' }}>{coach.name}</b>
-                      <div style={{ color: '#64748B', fontSize: '12px', marginTop: '4px' }}>{coach.role_title || coach.title}</div>
+                      <div style={{ color: '#64748B', fontSize: '12px', marginTop: '4px' }}>
+                        {coach.role_title || coach.title}
+                      </div>
+
+                      {/* Direct 1-Click Upload Photo or Video button on card */}
+                      <label
+                        className="btn btn-red"
+                        style={{
+                          cursor: 'pointer',
+                          padding: '8px 16px',
+                          borderRadius: '8px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          fontSize: '12px',
+                          fontWeight: 700,
+                          marginTop: '16px',
+                          minHeight: '38px',
+                          boxShadow: '0 2px 8px rgba(225, 6, 0, 0.25)'
+                        }}
+                      >
+                        <Upload size={14} color="#000000" strokeWidth={2.5} style={{ stroke: '#000000' }} />
+                        <span>{uploadingCardId === coach.id ? 'Uploading...' : 'Upload Photo / Video'}</span>
+                        <input
+                          type="file"
+                          accept="image/*,video/*"
+                          onChange={e => handleDirectCardUpload(e, coach)}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                    </div>
+                  )}
+
+                  {/* If media exists, provide quick replace and remove buttons directly on card */}
+                  {photoSrc && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '8px',
+                      right: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      zIndex: 2
+                    }}>
+                      <label
+                        title="Replace Photo or Video"
+                        style={{
+                          background: 'rgba(0,0,0,0.7)',
+                          color: '#FFF',
+                          borderRadius: '6px',
+                          padding: '6px 10px',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          backdropFilter: 'blur(4px)'
+                        }}
+                      >
+                        <Upload size={12} color="#FFF" />
+                        <span>{uploadingCardId === coach.id ? '...' : 'Replace'}</span>
+                        <input
+                          type="file"
+                          accept="image/*,video/*"
+                          onChange={e => handleDirectCardUpload(e, coach)}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => handleDirectCardRemove(coach)}
+                        title="Remove media for this coach"
+                        style={{
+                          background: 'rgba(220, 38, 38, 0.85)',
+                          color: '#FFF',
+                          border: 'none',
+                          borderRadius: '6px',
+                          padding: '6px 10px',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          backdropFilter: 'blur(4px)'
+                        }}
+                      >
+                        <Trash2 size={12} color="#FFF" />
+                        <span>Remove</span>
+                      </button>
                     </div>
                   )}
                 </div>

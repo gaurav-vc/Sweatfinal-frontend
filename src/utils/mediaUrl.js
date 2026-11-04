@@ -20,4 +20,11 @@ export const resolveMediaUrl = (urlOrPath) => {
   return `${baseOrigin}/media/${str.replace(/^\/+/, '')}`;
 };
 
+// Check if a media file or URL is a video
+export const isVideoMedia = (urlOrPath) => {
+  if (!urlOrPath) return false;
+  const str = String(urlOrPath).split('?')[0].toLowerCase();
+  return /\.(mp4|webm|mov|ogg|m4v|avi|mkv)$/i.test(str) || str.includes('/videos/') || str.startsWith('data:video');
+};
+
 export default resolveMediaUrl;

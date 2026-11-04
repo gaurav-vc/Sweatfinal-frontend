@@ -3,6 +3,7 @@ import { Film, Save, Upload, CheckCircle2, ExternalLink, Play, Trash2, Maximize2
 import apiClient from '../api/apiClient';
 import { ENDPOINTS } from '../api/endpoints';
 import mediaApi from '../api/mediaApi';
+import { resolveMediaUrl, isVideoMedia } from '../utils/mediaUrl';
 
 export default function AdminHeroes() {
   const pages = [
@@ -594,10 +595,10 @@ export default function AdminHeroes() {
                   </div>
                 </div>
 
-                {heroData.video_url ? (
+                {isVideoMedia(heroData.video_url || heroData.background_image) ? (
                   <div>
                     <video
-                      src={heroData.video_url}
+                      src={resolveMediaUrl(heroData.video_url || heroData.background_image)}
                       controls
                       autoPlay
                       muted
@@ -606,19 +607,19 @@ export default function AdminHeroes() {
                       style={{ width: '100%', maxWidth: '440px', height: '220px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #CBD5E1' }}
                     />
                     <div style={{ fontSize: '12px', color: '#64748B', marginTop: '6px' }}>
-                      Video URL: <code style={{ color: '#0F172A', background: '#FFFFFF', padding: '2px 6px', borderRadius: '4px' }}>{heroData.video_url}</code>
+                      Video URL: <code style={{ color: '#0F172A', background: '#FFFFFF', padding: '2px 6px', borderRadius: '4px' }}>{heroData.video_url || heroData.background_image}</code>
                     </div>
                   </div>
                 ) : (
                   <div>
                     <img
-                      src={heroData.background_image}
+                      src={resolveMediaUrl(heroData.background_image || heroData.video_url)}
                       alt="Hero background"
                       onLoad={e => setDetectedDim(`${e.target.naturalWidth} × ${e.target.naturalHeight} px`)}
                       style={{ width: '100%', maxWidth: '440px', height: '220px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #CBD5E1' }}
                     />
                     <div style={{ fontSize: '12px', color: '#64748B', marginTop: '6px' }}>
-                      Image URL: <code style={{ color: '#0F172A', background: '#FFFFFF', padding: '2px 6px', borderRadius: '4px' }}>{heroData.background_image}</code>
+                      Image URL: <code style={{ color: '#0F172A', background: '#FFFFFF', padding: '2px 6px', borderRadius: '4px' }}>{heroData.background_image || heroData.video_url}</code>
                     </div>
                   </div>
                 )}

@@ -97,9 +97,10 @@ export default function AdminMediaLibrary() {
           style={{ minHeight: '44px', fontSize: '13px', cursor: 'pointer', borderRadius: '6px' }}
         >
           <Upload size={16} color="#000000" strokeWidth={2.5} style={{ stroke: '#000000' }} />
-          <span>{uploading ? `Uploading (${uploadProgress}%)` : 'Upload New Media'}</span>
+          <span>{uploading ? `Uploading (${uploadProgress}%)` : 'Upload Photo or Video'}</span>
           <input
             type="file"
+            accept="image/*,video/*"
             onChange={handleFileUpload}
             style={{ display: 'none' }}
           />

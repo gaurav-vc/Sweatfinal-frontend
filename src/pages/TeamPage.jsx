@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import contentApi from '../api/contentApi';
 import MarqueeBanner from '../components/common/MarqueeBanner';
 import AnimatedHeadline from '../components/common/AnimatedHeadline';
-import { resolveMediaUrl } from '../utils/mediaUrl';
+import { resolveMediaUrl, isVideoMedia } from '../utils/mediaUrl';
 
 export const TeamPage = () => {
   const [data, setData] = useState(null);
@@ -71,22 +71,44 @@ export const TeamPage = () => {
 
           <div className="grid4" style={{ marginTop: '64px', gap: '24px' }}>
             {coaches && coaches.length > 0 ? (
-              coaches.map((coach, idx) => (
-                <div key={coach.id || idx} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div
-                    className="shot shot-lt"
-                    style={{
-                      height: '380px',
-                      backgroundImage: coach.photo || coach.photo_url ? `url(${coach.photo || coach.photo_url})` : undefined,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                    }}
-                  >
-                    {!(coach.photo || coach.photo_url) && <b>[TRAINER PHOTO]</b>}
-                  </div>
-                  <h3 className="disp" style={{ fontSize: '38px', margin: 0, color: '#0A0A0A' }}>
-                    {coach.name}
-                  </h3>
+              coaches.map((coach, idx) => {
+                const coachMedia = coach.photo || coach.photo_url;
+                const isVideo = isVideoMedia(coachMedia);
+                return (
+                  <div key={coach.id || idx} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    <div
+                      className="shot shot-lt"
+                      style={{
+                        height: '380px',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        background: '#0F172A',
+                      }}
+                    >
+                      {coachMedia ? (
+                        isVideo ? (
+                          <video
+                            src={resolveMediaUrl(coachMedia)}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          <img
+                            src={resolveMediaUrl(coachMedia)}
+                            alt={coach.name}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        )
+                      ) : (
+                        <b>[TRAINER PHOTO / VIDEO]</b>
+                      )}
+                    </div>
+                    <h3 className="disp" style={{ fontSize: '38px', margin: 0, color: '#0A0A0A' }}>
+                      {coach.name}
+                    </h3>
                   <span className="eyebrow" style={{ color: '#E10600', fontWeight: 800 }}>
                     {coach.role_title}
                   </span>
@@ -101,7 +123,8 @@ export const TeamPage = () => {
                     </p>
                   )}
                 </div>
-              ))
+              );
+            })
             ) : (
               <div className="shot shot-lt" style={{ gridColumn: 'span 4', height: '240px' }}>
                 <b>No Coaches Added Yet in CMS</b>
