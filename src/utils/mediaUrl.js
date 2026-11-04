@@ -6,9 +6,19 @@ export const resolveMediaUrl = (urlOrPath) => {
     return str;
   }
 
-  const baseOrigin = import.meta.env.PROD
-    ? 'https://sweatfit.vibesandbox.live'
-    : 'http://localhost:8000';
+  let baseOrigin = 'https://web.sweatfitwellness.com';
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host.includes('sweatfitwellness.com')) {
+      baseOrigin = 'https://web.sweatfitwellness.com';
+    } else if (host.includes('vibesandbox.live')) {
+      baseOrigin = 'https://sweatfit.vibesandbox.live';
+    } else if (host === 'localhost' || host === '127.0.0.1') {
+      baseOrigin = 'http://localhost:8000';
+    }
+  } else if (!import.meta.env.PROD) {
+    baseOrigin = 'http://localhost:8000';
+  }
 
   if (str.startsWith('/media/')) {
     return `${baseOrigin}${str}`;
