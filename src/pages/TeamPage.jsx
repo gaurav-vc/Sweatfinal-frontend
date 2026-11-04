@@ -93,13 +93,13 @@ export const TeamPage = () => {
                             loop
                             muted
                             playsInline
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
                           />
                         ) : (
                           <img
                             src={resolveMediaUrl(coachMedia)}
                             alt={coach.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
                           />
                         )
                       ) : (

@@ -145,10 +145,10 @@ export default function AdminHeroes() {
 
       const updatedHeroData = {
         ...heroData,
-        video_url: isVideo ? uploadedUrl : heroData.video_url,
-        video_file: isVideo ? uploadedUrl : (heroData.video_file || heroData.video_url),
-        background_image: !isVideo ? uploadedUrl : heroData.background_image,
-        fallback_image: !isVideo ? uploadedUrl : (heroData.fallback_image || heroData.background_image)
+        video_url: isVideo ? uploadedUrl : '',
+        video_file: isVideo ? uploadedUrl : null,
+        background_image: !isVideo ? uploadedUrl : '',
+        fallback_image: !isVideo ? uploadedUrl : null
       };
       setHeroData(updatedHeroData);
 
@@ -164,10 +164,10 @@ export default function AdminHeroes() {
         cta_primary_link: updatedHeroData.cta_primary_link || '/book',
         cta_secondary_text: updatedHeroData.cta_secondary_text || 'Fitness assessment',
         cta_secondary_link: updatedHeroData.cta_secondary_link || '/assessment',
-        video_url: isVideo ? uploadedUrl : (updatedHeroData.video_url || ''),
-        video_file: isVideo ? uploadedUrl : (updatedHeroData.video_file || ''),
-        background_image: !isVideo ? uploadedUrl : (updatedHeroData.background_image || ''),
-        fallback_image: !isVideo ? uploadedUrl : (updatedHeroData.fallback_image || ''),
+        video_url: isVideo ? uploadedUrl : '',
+        video_file: isVideo ? uploadedUrl : null,
+        background_image: !isVideo ? uploadedUrl : '',
+        fallback_image: !isVideo ? uploadedUrl : null,
       };
 
       if (updatedHeroData.id) {

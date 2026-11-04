@@ -47,6 +47,7 @@ export const TransformationSlider = ({ transformations = [] }) => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        objectPosition: 'center',
                         filter: 'grayscale(0.6) contrast(1.05) brightness(0.85)',
                       }}
                     />
@@ -58,6 +59,7 @@ export const TransformationSlider = ({ transformations = [] }) => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        objectPosition: 'center',
                         filter: 'grayscale(1) contrast(1.05) brightness(0.8)',
                       }}
                     />
@@ -99,6 +101,7 @@ export const TransformationSlider = ({ transformations = [] }) => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        objectPosition: 'center',
                         contrast: '1.05',
                       }}
                     />
@@ -110,6 +113,7 @@ export const TransformationSlider = ({ transformations = [] }) => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
+                        objectPosition: 'center',
                         contrast: '1.05',
                       }}
                     />

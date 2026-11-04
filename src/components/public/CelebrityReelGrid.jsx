@@ -53,13 +53,13 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
                         loop
                         muted
                         playsInline
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                       />
                     ) : (
                       <img
                         src={resolvedSrc}
                         alt={celeb.star_name}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                       />
                     )
                   ) : (
