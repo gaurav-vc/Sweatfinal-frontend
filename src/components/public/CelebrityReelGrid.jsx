@@ -14,9 +14,11 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
     );
   }
 
+  const isCount3 = celebrities.length === 3;
+
   return (
     <>
-      <div className="grid5">
+      <div className={`celeb-reel-grid ${isCount3 ? 'count-3' : ''}`}>
         {celebrities.map((celeb, idx) => {
           const mediaUrl = celeb.video_url || celeb.video_file || celeb.thumbnail;
           const isVideo = isVideoMedia(mediaUrl);
@@ -25,20 +27,20 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
           return (
             <div
               key={celeb.id || idx}
-              style={{ display: 'flex', flexDirection: 'column', gap: '12px', cursor: 'pointer' }}
+              className="celeb-card"
               onClick={() => {
                 if (resolvedSrc) {
                   setActiveMedia({ ...celeb, resolvedSrc, isVideo });
                 }
               }}
             >
-              <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '4px' }}>
+              <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '6px', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
                 
                 {/* Media Container with reticle styling */}
                 <div
                   className="shot"
                   style={{
-                    height: '420px',
+                    height: 'clamp(500px, 58vh, 620px)',
                     padding: 0,
                     overflow: 'hidden',
                     background: '#111111',
@@ -63,11 +65,44 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
                       />
                     )
                   ) : (
-                    <div style={{ padding: '20px', textAlign: 'center' }}>
-                      <b style={{ color: '#FFFFFF', fontSize: '15px' }}>{celeb.star_name}</b>
-                      <span>with the SWEAT team · {celeb.duration_label || 'vertical'}</span>
+                    <div style={{ padding: '24px', textAlign: 'center' }}>
+                      <b style={{ color: '#FFFFFF', fontSize: '16px' }}>{celeb.star_name}</b>
+                      <span>with the SWEAT team · {celeb.duration_label || 'vertical reel'}</span>
                     </div>
                   )}
+
+                  {/* Micro-badge at top */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '16px',
+                      left: '16px',
+                      zIndex: 3,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      background: 'rgba(10, 10, 10, 0.75)',
+                      backdropFilter: 'blur(8px)',
+                      padding: '4px 10px',
+                      borderRadius: '2px',
+                      border: '1px solid rgba(255, 255, 255, 0.14)',
+                    }}
+                  >
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#E10600' }} />
+                    <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', color: '#FFFFFF', textTransform: 'uppercase' }}>
+                      SWEAT ATHLETE
+                    </span>
+                  </div>
+
+                  {/* Bottom Vignette Scrim */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(10, 10, 10, 0.88) 0%, rgba(10, 10, 10, 0.2) 40%, rgba(10, 10, 10, 0) 100%)',
+                      pointerEvents: 'none',
+                    }}
+                  />
                 </div>
 
                 {/* Play Button Overlay (shown for videos) */}
@@ -79,26 +114,29 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      background: 'rgba(0, 0, 0, 0.25)',
-                      transition: 'background 0.2s ease',
+                      background: 'rgba(0, 0, 0, 0.2)',
+                      transition: 'background 0.3s ease',
                     }}
                   >
-                    <div className="play" style={{ width: '64px', height: '64px' }}>
-                      <Play size={24} color="#FFFFFF" fill="#FFFFFF" />
+                    <div className="play" style={{ width: '72px', height: '72px' }}>
+                      <Play size={28} color="#FFFFFF" fill="#FFFFFF" style={{ marginLeft: '4px' }} />
                     </div>
                   </div>
                 )}
 
               </div>
 
-              <div className="disp" style={{ fontSize: '34px', lineHeight: 1, textTransform: 'uppercase' }}>
-                {celeb.star_name}
+              {/* Text Info */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div className="disp" style={{ fontSize: 'clamp(30px, 2.5vw, 40px)', lineHeight: 1, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+                  {celeb.star_name}
+                </div>
+                {celeb.quote && (
+                  <p style={{ margin: 0, fontSize: '14px', color: '#B8B8B8', lineHeight: 1.55, fontStyle: 'italic' }}>
+                    "{celeb.quote}"
+                  </p>
+                )}
               </div>
-              {celeb.quote && (
-                <p style={{ margin: 0, fontSize: '13px', color: '#A3A3A3', lineHeight: 1.4 }}>
-                  "{celeb.quote}"
-                </p>
-              )}
             </div>
           );
         })}

@@ -42,10 +42,10 @@ export const HomePage = () => {
     <div className="sw">
       
       {/* 1. HERO SECTION */}
-      <section style={{ position: 'relative', minHeight: '980px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', borderBottom: '1px solid rgba(255, 255, 255, 0.12)', overflow: 'hidden' }}>
+      <section className="hero-section">
         
         {/* Background Hero Media */}
-        <div style={{ position: 'absolute', inset: 0 }}>
+        <div className="hero-media-wrapper">
           {heroVideo ? (
             <video
               src={heroVideo}
@@ -53,13 +53,13 @@ export const HomePage = () => {
               loop
               muted
               playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+              className="hero-video-bg"
             />
           ) : heroImage ? (
             <img
               src={heroImage}
               alt="SWEAT HQ Hero"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+              className="hero-video-bg"
             />
           ) : (
             <div className="shot" style={{ width: '100%', height: '100%', border: 0, opacity: 0.9 }}>
@@ -70,10 +70,10 @@ export const HomePage = () => {
         </div>
 
         {/* Ambient Gradient Overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, 0.94) 100%)' }} />
+        <div className="hero-gradient-overlay" />
 
         {/* Hero Content Container */}
-        <div className="wrap" style={{ position: 'relative', paddingTop: '120px', paddingBottom: '64px', display: 'flex', flexDirection: 'column', gap: '36px' }}>
+        <div className="wrap hero-content-wrap">
           
           {/* Eyebrow with pulsating red dot */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
@@ -206,15 +206,17 @@ export const HomePage = () => {
       </section>
 
       {/* 5. SEVEN WAYS IN (PROGRAMS ACCORDION) */}
-      <section id="programs" style={{ padding: '120px 0', background: '#0A0A0A', minHeight: '1000px' }}>
-        <div className="wrap">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
-            <span className="eyebrow red">Seven ways in</span>
-            <AnimatedHeadline className="disp h2">
-              PICK THE<br />OUTCOME.
-            </AnimatedHeadline>
-            <p style={{ margin: 0, fontSize: '18px', lineHeight: 1.6, color: '#A3A3A3', maxWidth: '640px' }}>
-              Every program starts with an assessment, and every one is matched to your level and your goal.
+      <section id="programs" style={{ padding: '100px 0 120px', background: '#0A0A0A', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ width: '100%', maxWidth: '1600px', margin: '0 auto', padding: '0 clamp(20px, 4vw, 48px)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '32px', marginBottom: '44px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <span className="eyebrow red">Seven ways in · The SWEAT Method</span>
+              <AnimatedHeadline className="disp h2" style={{ fontSize: 'clamp(52px, 7vw, 110px)', lineHeight: 0.9 }}>
+                PICK THE<br />OUTCOME.
+              </AnimatedHeadline>
+            </div>
+            <p style={{ margin: 0, fontSize: '19px', lineHeight: 1.6, color: '#A3A3A3', maxWidth: '520px' }}>
+              Every program starts with an assessment, and every one is matched to your level and your goal. Hover or tap to expand each training discipline.
             </p>
           </div>
 
@@ -224,23 +226,23 @@ export const HomePage = () => {
 
       {/* 6. CELEBRITY REELS & TESTIMONIALS */}
       <section style={{ background: '#0A0A0A', padding: '112px 0', borderTop: '1px solid rgba(255, 255, 255, 0.12)', overflow: 'hidden' }}>
-        <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
+        <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
           
           <div className="split" style={{ alignItems: 'end' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <span className="eyebrow red">The stars · in their own words</span>
-              <AnimatedHeadline className="disp h2" style={{ fontSize: '132px' }}>
-                THEY COACHED<br />THEM. NOW<br />THEY COACH <span className="out">YOU.</span>
+              <AnimatedHeadline className="disp h2" style={{ fontSize: 'clamp(44px, 5.5vw, 92px)', lineHeight: 0.92 }}>
+                THEY COACHED THEM.<br />NOW THEY COACH <span className="out">YOU.</span>
               </AnimatedHeadline>
             </div>
-            <p style={{ margin: 0, fontSize: '20px', lineHeight: 1.6, color: '#C4C4C4', maxWidth: '520px' }}>
+            <p style={{ margin: 0, fontSize: '19px', lineHeight: 1.6, color: '#C4C4C4', maxWidth: '520px' }}>
               The coaches and team at SWEAT have trained some of Bollywood's best-known names. The same eye, the same standard and the same system now coach every member at SWEAT HQ.
             </p>
           </div>
 
           <CelebrityReelGrid celebrities={celebrities} />
 
-          <p style={{ margin: 0, fontSize: '13px', color: '#8A8A8A' }}>
+          <p style={{ margin: 0, fontSize: '13px', color: '#8A8A8A', textAlign: 'center' }}>
             Videos, names and likenesses to be used only as cleared by SWEAT and each person.
           </p>
         </div>

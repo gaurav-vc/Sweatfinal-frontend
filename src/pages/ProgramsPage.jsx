@@ -34,8 +34,8 @@ export const ProgramsPage = () => {
       <MarqueeBanner text="BOOTCAMP ✕ PILATES ✕ GLUTES & ABS ✕ COACHING ✕ ASSESSMENT ✕ NUTRITION ✕ ONLINE ✕ " />
 
       {/* PAN ACCORDION DISPLAY */}
-      <section style={{ padding: '100px 0', background: '#0A0A0A' }}>
-        <div className="wrap">
+      <section style={{ padding: '80px 0 100px', background: '#0A0A0A' }}>
+        <div style={{ width: '100%', maxWidth: '1600px', margin: '0 auto', padding: '0 clamp(20px, 4vw, 48px)' }}>
           <PanAccordion programs={programs} />
         </div>
       </section>

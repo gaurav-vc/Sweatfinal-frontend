@@ -457,8 +457,9 @@ a:hover {
 /* Horizontal Interactive Pan Accordion (.pans) */
 .pans {
   display: flex;
-  gap: 12px;
-  height: 680px;
+  gap: 14px;
+  height: clamp(740px, 78vh, 860px);
+  width: 100%;
 }
 
 .pan {
@@ -466,45 +467,142 @@ a:hover {
   flex: 1 1 0;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: #111111;
-  transition: flex 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0E0E0E;
+  transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 28px;
+  justify-content: space-between;
+  padding: 32px 24px;
   text-decoration: none;
   color: #FFFFFF;
+  border-radius: 6px;
 }
 
-.pan:hover {
-  flex: 3.2;
+.pan:hover, .pan.active {
+  flex: 3.8;
   color: #FFFFFF;
   border-color: var(--primary-red);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 24px rgba(225, 6, 0, 0.22);
 }
 
-.pan .more {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: opacity 0.4s ease 0.1s, max-height 0.4s ease;
+.pan .pan-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 3;
 }
 
-.pan:hover .more {
-  opacity: 1;
-  max-height: 260px;
+.pan .pan-number {
+  font-family: 'Bebas Neue', 'Manrope', sans-serif;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--primary-red);
+  letter-spacing: 0.04em;
+  transition: transform 0.3s ease;
+}
+
+.pan:hover .pan-number {
+  transform: scale(1.08);
+}
+
+.pan .pan-bottom {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 3;
+  width: 100%;
 }
 
 .pan .vt {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   white-space: nowrap;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Bebas Neue', 'Manrope', sans-serif;
+  font-size: clamp(38px, 3.2vw, 56px);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: #FFFFFF;
+  margin: 0;
 }
 
 .pan:hover .vt {
   writing-mode: horizontal-tb;
   transform: none;
+  white-space: normal;
+  font-size: clamp(44px, 4vw, 68px);
+  line-height: 0.95;
+}
+
+.pan .more {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease 0.15s, max-height 0.45s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pan:hover .more {
+  opacity: 1;
+  max-height: 380px;
+}
+
+/* Celebrity Reel Showcase Grid */
+.celeb-reel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  justify-content: center;
+  gap: clamp(24px, 3vw, 40px);
+  width: 100%;
+}
+
+.celeb-reel-grid.count-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.celeb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.celeb-card:hover {
+  transform: translateY(-8px);
+}
+
+.celeb-card:hover .shot::before,
+.celeb-card:hover .shot::after {
+  width: 26px;
+  height: 26px;
+  box-shadow: 0 0 16px rgba(225, 6, 0, 0.9);
+}
+
+.celeb-card:hover .play {
+  transform: scale(1.15);
+  box-shadow: 0 0 36px rgba(225, 6, 0, 0.85);
+}
+
+@media (max-width: 1024px) {
+  .celeb-reel-grid.count-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .celeb-reel-grid,
+  .celeb-reel-grid.count-3 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 
 /* Pricing Table */
@@ -649,12 +747,56 @@ table.price th {
 .hero-section {
   position: relative;
   overflow: hidden;
-  padding: 120px 0 72px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   min-height: 940px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+
+.hero-media-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0A0A0A;
+  z-index: 0;
+}
+
+.hero-video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Scale by 1.52 to cleanly eliminate hardcoded 180px letterbox bars from video stream */
+  transform: scale(1.52);
+  transform-origin: center center;
+  opacity: 0.88;
+  display: block;
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.45) 0%,
+    rgba(10, 10, 10, 0.15) 30%,
+    rgba(10, 10, 10, 0.82) 75%,
+    rgba(10, 10, 10, 0.98) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content-wrap {
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  z-index: 2;
 }
 
 .hero-stats-grid {
@@ -778,16 +920,23 @@ h1, h2, h3, h4, h5, h6, .disp, .h1, .h2, p, span, a {
   .pans {
     flex-direction: column !important;
     height: auto !important;
+    gap: 16px !important;
   }
   .pan {
-    min-height: 140px !important;
+    min-height: 160px !important;
+    padding: 24px !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
   }
   .pan:hover {
     flex: 1 1 auto !important;
   }
+  .pan .pan-top {
+    margin-bottom: 8px !important;
+  }
   .pan .more {
     opacity: 1 !important;
-    max-height: 320px !important;
+    max-height: 380px !important;
   }
   .pan .vt {
     writing-mode: horizontal-tb !important;
@@ -856,9 +1005,31 @@ h1, h2, h3, h4, h5, h6, .disp, .h1, .h2, p, span, a {
   }
 
   .hero-section {
-    min-height: auto !important;
-    padding: 88px 0 40px !important;
-    justify-content: flex-start !important;
+    min-height: 100svh !important;
+    min-height: calc(100vh - 76px) !important;
+    padding: 0 !important;
+    justify-content: flex-end !important;
+  }
+
+  .hero-video-bg {
+    transform: scale(1.55) !important;
+    object-position: center 42% !important;
+  }
+
+  .hero-content-wrap {
+    padding-top: 24px !important;
+    padding-bottom: 32px !important;
+    gap: 18px !important;
+  }
+
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.35) 0%,
+      rgba(10, 10, 10, 0.08) 25%,
+      rgba(10, 10, 10, 0.7) 65%,
+      rgba(10, 10, 10, 0.96) 95%
+    ) !important;
   }
 
   .slot-booking-card {
