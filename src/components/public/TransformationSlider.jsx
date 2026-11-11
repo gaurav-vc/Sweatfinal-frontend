@@ -31,7 +31,7 @@ export const TransformationSlider = ({ transformations = [] }) => {
             }}
           >
             {/* Dual Before / After Split View (Photo or Video) */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px', height: '520px' }}>
+            <div className="transformation-media-split" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3px', height: '520px' }}>
               
               {/* Before Column */}
               <div style={{ position: 'relative', overflow: 'hidden' }}>

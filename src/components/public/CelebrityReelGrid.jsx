@@ -149,6 +149,7 @@ export const CelebrityReelGrid = ({ celebrities = [] }) => {
                 src={activeMedia.resolvedSrc}
                 controls
                 autoPlay
+                playsInline
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             ) : (

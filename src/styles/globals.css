@@ -915,6 +915,10 @@ h1, h2, h3, h4, h5, h6, .disp, .h1, .h2, p, span, a {
     max-height: 380px !important;
   }
 
+  .transformation-media-split {
+    height: 380px !important;
+  }
+
   .map-shot-container {
     height: 320px !important;
   }
@@ -931,6 +935,14 @@ h1, h2, h3, h4, h5, h6, .disp, .h1, .h2, p, span, a {
   }
   .grid5 {
     grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .shot {
+    max-height: 300px !important;
+  }
+
+  .transformation-media-split {
+    height: 300px !important;
   }
 
   /* Tight Mobile Screen Headings */
