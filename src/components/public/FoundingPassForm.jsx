@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import bookingsApi from '../../api/bookingsApi';
+import { trackEvent } from '../../services/pixelService';
 
 /**
  * FoundingPassForm - Luxury High-Converting Lead Capture Form
@@ -129,6 +130,15 @@ export const FoundingPassForm = ({
     setLoading(false);
 
     if (crmSuccess) {
+      // Fire real-time conversion event to GA4 & Meta Pixel
+      trackEvent('Lead', {
+        lead_type: leadType,
+        interested_in: interestedIn,
+        branch: selectedBranch,
+        fitness_goal: selectedGoal,
+        lead_source: leadSource,
+      });
+
       setFeedback({
         type: 'success',
         text: 'Founding pass reserved! Our concierge will WhatsApp you shortly with your exclusive pass details.'

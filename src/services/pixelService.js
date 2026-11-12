@@ -1,10 +1,83 @@
 // ==========================================================================
-// SWEAT HQ — Isolated & Fault-Tolerant Meta Pixel Analytics Engine
+// SWEAT HQ — Isolated & Fault-Tolerant Analytics Engine (GA4 + Meta Pixel)
 // 100% Fail-Safe: AdBlocker resilient, non-blocking, dynamically configurable
+// Zero Risk: Changes are isolated to the analytics layer, backend APIs untouched
 // ==========================================================================
 
+export const GA4_MEASUREMENT_ID = 'G-2Z2QL6Y5H';
 const STORAGE_KEY = 'sweat_meta_pixel_config';
 export const DEFAULT_PIXEL_ID = '1131319899356928';
+
+/**
+ * Dispatch events safely to Google Analytics 4 (gtag.js)
+ * Guarantees zero blocking of UI or API workflows
+ */
+export function sendToGA4(eventName, payload = {}) {
+  if (typeof window === 'undefined') return;
+
+  try {
+    if (typeof window.gtag === 'function') {
+      // Map standard event names to GA4 recommended event names
+      let gaEvent = eventName;
+      let gaPayload = { ...payload };
+
+      switch (eventName) {
+        case 'PageView':
+          gaEvent = 'page_view';
+          gaPayload = {
+            page_path: payload.page_path || window.location.pathname,
+            page_title: payload.page_title || (typeof document !== 'undefined' ? document.title : ''),
+            page_location: window.location.href,
+            ...payload
+          };
+          break;
+        case 'InitiateCheckout':
+          gaEvent = 'begin_checkout';
+          break;
+        case 'Schedule':
+          gaEvent = 'schedule';
+          break;
+        case 'Lead':
+          gaEvent = 'generate_lead';
+          break;
+        case 'Contact':
+          gaEvent = 'contact';
+          break;
+        case 'ViewContent':
+          gaEvent = 'select_content';
+          break;
+        default:
+          gaEvent = eventName.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+          break;
+      }
+
+      // Fire to GA4 with real-time debug_mode enabled
+      window.gtag('event', gaEvent, {
+        ...gaPayload,
+        send_to: GA4_MEASUREMENT_ID,
+        debug_mode: true
+      });
+
+      if (typeof console !== 'undefined') {
+        console.log(
+          `%c[GA4 🟢 Real-Time] ${gaEvent}`,
+          'background: #E37400; color: #fff; font-weight: bold; padding: 2px 8px; border-radius: 4px;',
+          gaPayload
+        );
+      }
+    }
+  } catch (err) {
+    // Fail silently - never crash app
+    console.warn('[GA4 Safe Guard]', err);
+  }
+}
+
+/**
+ * Direct GA4 event tracking helper
+ */
+export function trackGA4Event(gaEventName, params = {}) {
+  sendToGA4(gaEventName, params);
+}
 
 // Read dynamic configuration from localStorage or default
 export function getPixelConfig() {
@@ -105,6 +178,10 @@ export function clearEventHistory() {
 export function trackEvent(eventName, payload = {}) {
   if (typeof window === 'undefined') return;
 
+  // 1. Dispatch safely to Google Analytics 4 (Real-time tracking)
+  sendToGA4(eventName, payload);
+
+  // 2. Dispatch to Meta Pixel if enabled
   const config = getPixelConfig();
   if (!config.enabled) return;
 
@@ -139,6 +216,10 @@ export function trackEvent(eventName, payload = {}) {
 export function trackCustomEvent(eventName, payload = {}) {
   if (typeof window === 'undefined') return;
 
+  // 1. Dispatch safely to Google Analytics 4
+  sendToGA4(eventName, payload);
+
+  // 2. Dispatch to Meta Pixel if enabled
   const config = getPixelConfig();
   if (!config.enabled) return;
 

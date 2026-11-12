@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, User, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Lock, User, AlertCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import SweatLogo from '../components/common/SweatLogo';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -125,9 +126,9 @@ export default function AdminLogin() {
               Password
             </label>
             <div style={{ position: 'relative' }}>
-              <Lock size={18} style={{ position: 'absolute', left: '16px', top: '16px', color: '#E10600' }} />
+              <Lock size={18} style={{ position: 'absolute', left: '16px', top: '17px', color: '#E10600', pointerEvents: 'none' }} />
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -136,7 +137,7 @@ export default function AdminLogin() {
                   width: '100%',
                   height: '52px',
                   paddingLeft: '48px',
-                  paddingRight: '16px',
+                  paddingRight: '48px',
                   background: '#F9FAFB',
                   border: '1px solid #D1D5DB',
                   borderRadius: '6px',
@@ -148,6 +149,30 @@ export default function AdminLogin() {
                 onFocus={(e) => { e.target.style.borderColor = '#E10600'; e.target.style.outline = '2px solid #E10600'; }}
                 onBlur={(e) => { e.target.style.borderColor = '#D1D5DB'; e.target.style.outline = 'none'; }}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '16px',
+                  top: '16px',
+                  background: 'transparent',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  color: '#6B7280',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'color 0.2s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#111827'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#6B7280'}
+                title={showPassword ? "Hide password" : "Show password"}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
+              </button>
             </div>
           </div>
 

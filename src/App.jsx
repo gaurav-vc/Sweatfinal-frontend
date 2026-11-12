@@ -7,7 +7,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import PixelMonitor from './components/common/PixelMonitor';
-import { trackPageView } from './services/pixelService';
+import { trackPageView, trackEvent } from './services/pixelService';
 
 // 17 Public Pages
 import HomePage from './pages/HomePage';
@@ -50,16 +50,47 @@ function ScrollToTop() {
   return null;
 }
 
-// Meta Pixel real-time PageView tracker (Commented out per request)
-/*
-function PixelRouteTracker() {
-  const { pathname } = useLocation();
+// Active Real-Time Analytics & PageView Tracker (GA4 Stream: Sweatfit Wellness G-2Z2QL6Y5H)
+function AnalyticsTracker() {
+  const { pathname, search } = useLocation();
+
   useEffect(() => {
-    trackPageView(pathname);
-  }, [pathname]);
+    // 1. Fire PageView on every route change to GA4
+    trackPageView(pathname + search);
+  }, [pathname, search]);
+
+  useEffect(() => {
+    // 2. Global automatic button/CTA click listener for 100% click coverage
+    const handleGlobalClick = (e) => {
+      try {
+        const target = e.target.closest('button, a.btn, .btn, [role="button"]');
+        if (!target) return;
+
+        const buttonText = (target.innerText || target.getAttribute('aria-label') || target.title || '').trim().slice(0, 50);
+        const destination = target.getAttribute('href') || target.getAttribute('to') || undefined;
+
+        // Skip tracking if already handled by an explicit event
+        if (target.dataset?.tracked) return;
+
+        if (buttonText) {
+          trackEvent('select_content', {
+            content_type: 'button',
+            item_name: buttonText,
+            destination: destination || 'in_page_action',
+            page_path: window.location.pathname
+          });
+        }
+      } catch (err) {
+        // Safe guard
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick, { capture: true, passive: true });
+    return () => document.removeEventListener('click', handleGlobalClick, { capture: true });
+  }, []);
+
   return null;
 }
-*/
 
 // Public Page Shell with Framer Motion Page Transitions
 function PublicLayout() {
@@ -109,7 +140,7 @@ export default function App() {
   return (
     <AuthProvider>
       <ScrollToTop />
-      {/* <PixelRouteTracker /> */}
+      <AnalyticsTracker />
       <Routes>
         {/* PUBLIC 17-PAGE ROUTES + COMPATIBILITY PROGRAM ALIASES */}
         <Route element={<PublicLayout />}>
