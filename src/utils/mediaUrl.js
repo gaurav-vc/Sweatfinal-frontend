@@ -6,11 +6,11 @@ export const resolveMediaUrl = (urlOrPath) => {
     return str;
   }
 
-  let baseOrigin = 'https://api.sweatfitwellness.com';
+  let baseOrigin = 'https://web.sweatfitwellness.com';
   if (typeof window !== 'undefined') {
     const host = window.location.hostname;
     if (host.includes('sweatfitwellness.com')) {
-      baseOrigin = 'https://api.sweatfitwellness.com';
+      baseOrigin = 'https://web.sweatfitwellness.com';
     } else if (host === 'localhost' || host === '127.0.0.1') {
       baseOrigin = 'http://localhost:8000';
     }

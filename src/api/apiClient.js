@@ -1,7 +1,7 @@
 // Production, Live & Local Environment URLs
 export const PRODUCTION_URL = 'https://sweatfitwellness.com/';
 export const LIVE_URL = 'https://sweatfitwellness.com/';
-export const LIVE_API_URL = 'https://api.sweatfitwellness.com/api/v1';
+export const LIVE_API_URL = 'https://web.sweatfitwellness.com/api/v1';
 export const LOCAL_API_URL = 'http://localhost:8000/api/v1';
 
 // Switch automatically based on hostname, VITE_API_URL, or production environment
