@@ -51,12 +51,8 @@ export function sendToGA4(eventName, payload = {}) {
           break;
       }
 
-      // Fire to GA4 with real-time debug_mode enabled
-      window.gtag('event', gaEvent, {
-        ...gaPayload,
-        send_to: GA4_MEASUREMENT_ID,
-        debug_mode: true
-      });
+      // Fire directly to GA4 for live production tracking
+      window.gtag('event', gaEvent, gaPayload);
 
       if (typeof console !== 'undefined') {
         console.log(
