@@ -1,8 +1,7 @@
 // Production, Live & Local Environment URLs
 export const PRODUCTION_URL = 'https://sweatfitwellness.com/';
 export const LIVE_URL = 'https://sweatfitwellness.com/';
-export const LIVE_API_URL = 'https://web.sweatfitwellness.com/api/v1';
-export const VIBESANDBOX_API_URL = 'https://sweatfit.vibesandbox.live/api/v1';
+export const LIVE_API_URL = 'https://api.sweatfitwellness.com/api/v1';
 export const LOCAL_API_URL = 'http://localhost:8000/api/v1';
 
 // Switch automatically based on hostname, VITE_API_URL, or production environment
@@ -14,9 +13,6 @@ export const resolveBaseApiUrl = () => {
     const host = window.location.hostname;
     if (host.includes('sweatfitwellness.com')) {
       return LIVE_API_URL;
-    }
-    if (host.includes('vibesandbox.live')) {
-      return VIBESANDBOX_API_URL;
     }
     if (host === 'localhost' || host === '127.0.0.1') {
       return LOCAL_API_URL;

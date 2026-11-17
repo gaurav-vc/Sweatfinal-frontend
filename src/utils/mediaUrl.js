@@ -6,13 +6,11 @@ export const resolveMediaUrl = (urlOrPath) => {
     return str;
   }
 
-  let baseOrigin = 'https://web.sweatfitwellness.com';
+  let baseOrigin = 'https://api.sweatfitwellness.com';
   if (typeof window !== 'undefined') {
     const host = window.location.hostname;
     if (host.includes('sweatfitwellness.com')) {
-      baseOrigin = 'https://web.sweatfitwellness.com';
-    } else if (host.includes('vibesandbox.live')) {
-      baseOrigin = 'https://sweatfit.vibesandbox.live';
+      baseOrigin = 'https://api.sweatfitwellness.com';
     } else if (host === 'localhost' || host === '127.0.0.1') {
       baseOrigin = 'http://localhost:8000';
     }
