@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Routes, Route, useLocation, Navigate, Outlet } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -53,9 +53,15 @@ function ScrollToTop() {
 // Active Real-Time Analytics & PageView Tracker (GA4 Stream: Sweatfit Wellness G-2Z2QL6Y5H)
 function AnalyticsTracker() {
   const { pathname, search } = useLocation();
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // 1. Fire PageView on every route change to GA4
+    // Initial page load is automatically collected by gtag('config', 'G-2Z2QL6Y5H') in index.html
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    // Fire PageView on every subsequent SPA route change to GA4
     trackPageView(pathname + search);
   }, [pathname, search]);
 
