@@ -8,6 +8,20 @@ export const GA4_MEASUREMENT_ID = 'G-2Z2QL6Y5H';
 const STORAGE_KEY = 'sweat_meta_pixel_config';
 export const DEFAULT_PIXEL_ID = '1131319899356928';
 
+// Ensure dataLayer and gtag are always present in the browser
+if (typeof window !== 'undefined') {
+  window.dataLayer = window.dataLayer || [];
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function() {
+      window.dataLayer.push(arguments);
+    };
+  }
+  console.log(
+    `%c[GA4 🟢 Stream Connected] Property: Sweatfit Wellness (${GA4_MEASUREMENT_ID})`,
+    'background: #0F9D58; color: #FFFFFF; font-weight: bold; padding: 4px 10px; border-radius: 4px; font-size: 12px;'
+  );
+}
+
 /**
  * Dispatch events safely to Google Analytics 4 (gtag.js)
  * Guarantees zero blocking of UI or API workflows
@@ -16,51 +30,58 @@ export function sendToGA4(eventName, payload = {}) {
   if (typeof window === 'undefined') return;
 
   try {
-    if (typeof window.gtag === 'function') {
-      // Map standard event names to GA4 recommended event names
-      let gaEvent = eventName;
-      let gaPayload = { ...payload };
+    // Ensure gtag function is ready
+    window.dataLayer = window.dataLayer || [];
+    if (typeof window.gtag !== 'function') {
+      window.gtag = function() {
+        window.dataLayer.push(arguments);
+      };
+    }
 
-      switch (eventName) {
-        case 'PageView':
-          gaEvent = 'page_view';
-          gaPayload = {
-            page_path: payload.page_path || window.location.pathname,
-            page_title: payload.page_title || (typeof document !== 'undefined' ? document.title : ''),
-            page_location: window.location.href,
-            ...payload
-          };
-          break;
-        case 'InitiateCheckout':
-          gaEvent = 'begin_checkout';
-          break;
-        case 'Schedule':
-          gaEvent = 'schedule';
-          break;
-        case 'Lead':
-          gaEvent = 'generate_lead';
-          break;
-        case 'Contact':
-          gaEvent = 'contact';
-          break;
-        case 'ViewContent':
-          gaEvent = 'select_content';
-          break;
-        default:
-          gaEvent = eventName.toLowerCase().replace(/[^a-z0-9_]/g, '_');
-          break;
-      }
+    // Map standard event names to GA4 recommended event names
+    let gaEvent = eventName;
+    let gaPayload = { ...payload };
 
-      // Fire directly to GA4 for live production tracking
-      window.gtag('event', gaEvent, gaPayload);
+    switch (eventName) {
+      case 'PageView':
+        gaEvent = 'page_view';
+        gaPayload = {
+          page_path: payload.page_path || window.location.pathname,
+          page_title: payload.page_title || (typeof document !== 'undefined' ? document.title : ''),
+          page_location: window.location.href,
+          ...payload
+        };
+        break;
+      case 'InitiateCheckout':
+        gaEvent = 'begin_checkout';
+        break;
+      case 'Schedule':
+        gaEvent = 'schedule';
+        break;
+      case 'Lead':
+        gaEvent = 'generate_lead';
+        break;
+      case 'Contact':
+        gaEvent = 'contact';
+        break;
+      case 'ViewContent':
+        gaEvent = 'select_content';
+        break;
+      default:
+        gaEvent = eventName.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+        break;
+    }
 
-      if (typeof console !== 'undefined') {
-        console.log(
-          `%c[GA4 🟢 Real-Time] ${gaEvent}`,
-          'background: #E37400; color: #fff; font-weight: bold; padding: 2px 8px; border-radius: 4px;',
-          gaPayload
-        );
-      }
+    // 1. Fire directly to GA4
+    window.gtag('event', gaEvent, gaPayload);
+
+    // 2. High-visibility console feedback for real-time verification
+    if (typeof console !== 'undefined') {
+      console.log(
+        `%c[GA4 🟢 Real-Time] ${gaEvent}`,
+        'background: #E37400; color: #FFFFFF; font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 11px;',
+        gaPayload
+      );
     }
   } catch (err) {
     // Fail silently - never crash app

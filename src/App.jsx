@@ -53,15 +53,9 @@ function ScrollToTop() {
 // Active Real-Time Analytics & PageView Tracker (GA4 Stream: Sweatfit Wellness G-2Z2QL6Y5H)
 function AnalyticsTracker() {
   const { pathname, search } = useLocation();
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Initial page load is automatically collected by gtag('config', 'G-2Z2QL6Y5H') in index.html
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    // Fire PageView on every subsequent SPA route change to GA4
+    // Fire PageView immediately on initial load AND on every SPA route change
     trackPageView(pathname + search);
   }, [pathname, search]);
 
@@ -69,7 +63,7 @@ function AnalyticsTracker() {
     // 2. Global automatic button/CTA click listener for 100% click coverage
     const handleGlobalClick = (e) => {
       try {
-        const target = e.target.closest('button, a.btn, .btn, [role="button"]');
+        const target = e.target.closest('button, a, .btn, [role="button"]');
         if (!target) return;
 
         const buttonText = (target.innerText || target.getAttribute('aria-label') || target.title || '').trim().slice(0, 50);
