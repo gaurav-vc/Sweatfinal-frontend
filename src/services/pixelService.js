@@ -4,7 +4,8 @@
 // Zero Risk: Changes are isolated to the analytics layer, backend APIs untouched
 // ==========================================================================
 
-export const GA4_MEASUREMENT_ID = 'G-2Z2QL6Y5H';
+export const GA4_MEASUREMENT_ID = 'G-2Z2ZQL6Y5H';
+export const GOOGLE_TAG_ID = 'AW-17811426846';
 const STORAGE_KEY = 'sweat_meta_pixel_config';
 export const DEFAULT_PIXEL_ID = '1131319899356928';
 
