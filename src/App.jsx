@@ -50,7 +50,7 @@ function ScrollToTop() {
   return null;
 }
 
-// Active Real-Time Analytics & PageView Tracker (GA4 Stream: Sweatfit Wellness G-2Z2QL6Y5H)
+// Active Real-Time Analytics & PageView Tracker (GA4 Stream: Sweatfit Wellness G-2Z2ZQL6Y5H)
 function AnalyticsTracker() {
   const { pathname, search } = useLocation();
 
